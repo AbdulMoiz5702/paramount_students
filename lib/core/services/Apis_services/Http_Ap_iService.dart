@@ -98,27 +98,21 @@ class HttpApiService implements BaseApiService {
 
   @override
   Future<T> postWithoutToJson<T>(
-    String url, {
-    required Map<String, String> headers,
-    required T Function(Map<String, dynamic>) fromJson,
-  }) async {
-    try {
-      final response = await http
-          .post(
-            Uri.parse(url),
-            headers: headers,
-          )
-          .timeout(const Duration(seconds: 10));
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        final decoded = jsonDecode(response.body);
-        return fromJson(decoded);
+      String url,{
+        required Map<String, String> headers,
+        required T Function(Map<String, dynamic>) fromJson,
+      }) async {
+    final response = await http.post(Uri.parse(url), headers: headers).timeout(const Duration(seconds: 10));
+    if (response.statusCode == 200) {
+      final decodedBody = jsonDecode(response.body);
+      if (decodedBody is Map<String, dynamic>) {
+        return fromJson(decodedBody);
       } else {
-        throw Exception(
-          'POST failed: ${response.statusCode} ${response.body}',
-        );
+        throw FormatException('Expected JSON object but got: ${response.body}');
       }
-    } catch (error) {
-      throw Exception('POST Error: $error');
+    } else {
+      throw Exception('POST failed: ${response.statusCode} ${response.body}');
     }
   }
+
 }

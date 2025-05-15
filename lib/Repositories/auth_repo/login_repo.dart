@@ -34,18 +34,19 @@ class LoginRepo {
       }
       return response;
     } catch (error) {
-      final errorMessage = ExceptionHandler.getMessage(error);
-      if(ExceptionHandler.statusCode == 403){
-        final otpData = ExceptionHandler.getUserOTPData(error);
-        if (otpData != null) {
-          Navigator.pushNamed(context, Routes.verifyOtp, arguments: {'id': otpData.id.toString(),'email':loginRequestModel.email},);
+      Future.microtask((){
+        final errorMessage = ExceptionHandler.getMessage(error);
+        if(ExceptionHandler.statusCode == 403){
+          final otpData = ExceptionHandler.getUserOTPData(error);
+          if (otpData != null) {
+            Navigator.pushNamed(context, Routes.verifyOtp, arguments: {'id': otpData.id.toString(),'email':loginRequestModel.email},);
+          }
+          SnackBarClass.successSnackBar(context: context, message: errorMessage);
+        }else{
+          SnackBarClass.errorSnackBar(context: context, message: errorMessage);
         }
-        SnackBarClass.successSnackBar(context: context, message: errorMessage);
-        rethrow;
-      }else{
-        SnackBarClass.errorSnackBar(context: context, message: errorMessage);
-        rethrow;
-      }
+      });
+      rethrow;
     }
   }
 

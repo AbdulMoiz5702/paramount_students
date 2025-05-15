@@ -24,7 +24,7 @@ class SignupRepo {
         fromJson: (json) => SignupResponseModel.fromJson(json),
       );
       if(response.statusCode == 200){
-        Navigator.pushNamedAndRemoveUntil(context, Routes.verifyOtp, (route) => false,arguments: {'id':response.responseBody.userdata.id,'email':signupRequest.email});
+        Navigator.pushNamedAndRemoveUntil(context, Routes.verifyOtp, (route) => false,arguments: {'id':response.responseBody.userdata.id.toString(),'email':signupRequest.email});
       }
       return response;
     }catch(error,s){

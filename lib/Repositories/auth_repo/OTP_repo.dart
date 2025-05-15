@@ -24,7 +24,7 @@ class OtpRepo {
           headers: HeadersFormats.defaultHeaders(),
           fromJson: OTPResponse.fromJson);
       if (response.statusCode == 200) {
-        final accessToken = response.responseBody.accessToken;
+        final accessToken = response.responseBody!.accessToken;
         await SharedPrefServices.savePrefData(SharedPrefKeys.accessToken,
           accessToken,
         );
@@ -51,7 +51,8 @@ class OtpRepo {
         SnackBarClass.successSnackBar(context: context, message: 'We have sent you a OTP at your email');
       }
       return response;
-    } catch (error) {
+    } catch (error,s) {
+      debugPrint('error:$error details : $s ');
       ExceptionHandler.handle(error, context);
       rethrow;
     }

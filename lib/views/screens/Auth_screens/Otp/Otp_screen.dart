@@ -17,7 +17,6 @@ class OTPScreen extends StatelessWidget {
   final String id;
   final String email;
   const OTPScreen({super.key,required this.id,required this.email});
-
   @override
   Widget build(BuildContext context) {
     final provider = context.read<OtpBloc>();
@@ -62,39 +61,41 @@ class OTPScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                BlocBuilder<OtpBloc,OtpState>(
-                buildWhen: (previous, current) =>
-                previous.isResendOtp != current.isResendOtp ||
-                previous.secondsRemaining != current.secondsRemaining,
-                builder: (context,state) {
-                    var data = state.secondsRemaining;
-                    var loading = state.isResendOtp;
-                    return data > 0
-                        ? lightText(
-                        title: "Resend in ${data}s") // Show countdown
-                        : loading == true
-                        ? const CustomLoading(
-                      imagePath:
-                      ImageConstant.ic_loading_animation,
-                      height: 0.1,
-                      width: 0.1,
-                    )
-                        : InkWell(
-                      onTap: () {
-                        context.read<OtpBloc>().add(ResentOtp(context: context, email: email));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
+                BlocBuilder<OtpBloc, OtpState>(
+                  buildWhen: (previous, current) => previous.isResendOtp != current.isResendOtp || previous.secondsRemaining != current.secondsRemaining,
+                  builder: (context, state) {
+                    final countdown = state.secondsRemaining;
+                    final loading = state.isResendOtp;
+                    if (countdown > 0) {
+                      return lightText(title: "Resend in ${countdown}s");
+                    } else if (loading) {
+                      return const CustomLoading(
+                        imagePath: ImageConstant.ic_loading_animation,
+                        height: 0.1,
+                        width: 0.1,
+                      );
+                    } else {
+                      return InkWell(
+                        onTap: () {
+                          context.read<OtpBloc>().add(ResentOtp(context: context, email: email));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
                             border: Border(
-                                bottom: BorderSide(
-                                    color: AppColor.primaryColor
-                                        .withOpacity(0.7),
-                                    width: 2.0))),
-                        child: mediumText(
+                              bottom: BorderSide(
+                                color: AppColor.primaryColor.withOpacity(0.7),
+                                width: 2.0,
+                              ),
+                            ),
+                          ),
+                          child: mediumText(
                             title: 'Send Code Again',
                             fontSize: 12.0,
-                            color: AppColor.primaryColor), ),
-                    );
+                            color: AppColor.primaryColor,
+                          ),
+                        ),
+                      );
+                    }
                   },
                 ),
               ],
@@ -103,7 +104,7 @@ class OTPScreen extends StatelessWidget {
             BlocBuilder<OtpBloc,OtpState>(
               buildWhen: (pre,current)=> pre.isConfirmOtp != current.isConfirmOtp,
                 builder: (context,state){
-                return state.isConfirmOtp == true ? const CustomLoading(imagePath: ImageConstant.ic_loading_animation) : CustomButton(title: 'Confirm', onTap: (){
+                return state.isConfirmOtp == true ? const CustomLoading(imagePath: ImageConstant.ic_loading_animation,height: 0.05,width: 0.1,) : CustomButton(title: 'Confirm', onTap: (){
                   context.read<OtpBloc>().add(ConfirmOtp(context: context, id: id));
                 });
             }),

@@ -3,23 +3,35 @@ import '../user_models/user_profile_model.dart';
 class OTPResponse {
   final bool error;
   final int statusCode;
-  final ResponseBody responseBody;
+  final ResponseBody? responseBody;
+  final String? message;
 
   OTPResponse({
     required this.error,
     required this.statusCode,
-    required this.responseBody,
+    this.responseBody,
+    this.message,
   });
 
   factory OTPResponse.fromJson(Map<String, dynamic> json) {
-    return OTPResponse(
-      error: json['error'] ?? false,
-      statusCode: json['statusCode'] ?? 0,
-      responseBody: ResponseBody.fromJson(json['responseBody']),
-    );
-  }
+    final rawResponse = json['responseBody'];
 
+    if (rawResponse is Map<String, dynamic>) {
+      return OTPResponse(
+        error: json['error'] ?? false,
+        statusCode: json['statusCode'] ?? 0,
+        responseBody: ResponseBody.fromJson(rawResponse),
+      );
+    } else {
+      return OTPResponse(
+        error: json['error'] ?? false,
+        statusCode: json['statusCode'] ?? 0,
+        message: rawResponse?.toString(),
+      );
+    }
+  }
 }
+
 
 
 class ResponseBody {

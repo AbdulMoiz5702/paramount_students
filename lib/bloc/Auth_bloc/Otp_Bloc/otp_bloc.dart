@@ -9,10 +9,12 @@ import 'otp_state.dart';
 class OtpBloc extends Bloc<OtpEvent, OtpState> {
   OtpBloc() : super(const OtpState(isConfirmOtp: false, isResendOtp: false,secondsRemaining: 0)) {
     on<ConfirmOtp>(confirmOtp);
+    on<ResentOtp>(resendOtp);
+    on<StartTimer>(startTimer);
   }
 
   TextEditingController otpController = TextEditingController();
-  Timer? _timer;
+
 
   Future<void> confirmOtp(ConfirmOtp event ,Emitter<OtpState> emit) async {
     try{
@@ -30,24 +32,24 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
       emit(state.copyWith(isResendOtp: true));
       await OtpRepo.resentOTp(context: event.context, email: event.email);
       otpController.clear();
-      startTimer(emit);
       emit(state.copyWith(isResendOtp: false));
+      add(StartTimer());
     } catch (error) {
       emit(state.copyWith(isResendOtp: false));
     }
   }
 
-  void startTimer(Emitter<OtpState> emit) {
-    emit(state.copyWith(secondsRemaining: 60));
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (state.secondsRemaining > 0) {
-        emit(state.copyWith(secondsRemaining: state.secondsRemaining - 1));
-      } else {
-        timer.cancel();
-      }
-    });
+  Future<void> startTimer(StartTimer event, Emitter<OtpState> emit) async {
+    int remaining = 60;
+    emit(state.copyWith(secondsRemaining: remaining));
+    while (remaining > 0) {
+      await Future.delayed(const Duration(seconds: 1));
+      remaining--;
+      if (emit.isDone) return;
+      emit(state.copyWith(secondsRemaining: remaining));
+    }
   }
+
 
 
 }

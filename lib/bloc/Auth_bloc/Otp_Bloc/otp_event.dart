@@ -25,3 +25,9 @@ class ResentOtp extends OtpEvent {
   @override
   List<Object> get props => [context,email];
 }
+
+class StartTimer extends OtpEvent {
+  StartTimer();
+  @override
+  List<Object> get props => [];
+}

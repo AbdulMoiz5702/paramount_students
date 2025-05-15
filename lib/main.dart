@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/Auth_bloc/Otp_Bloc/otp_bloc.dart';
 import 'bloc/Auth_bloc/Signup_bloc/signup_bloc.dart';
 import 'bloc/Auth_bloc/login_bloc/login_Bloc.dart';
 import 'core/routes/routes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final futures = await Future.wait([
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown,]),
+  ]);
   runApp(const MyApp());
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
