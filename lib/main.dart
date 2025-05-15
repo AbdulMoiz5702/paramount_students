@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:paramount_student/bloc/Splash/splash_bloc.dart';
 import 'bloc/Auth_bloc/Otp_Bloc/otp_bloc.dart';
 import 'bloc/Auth_bloc/Signup_bloc/signup_bloc.dart';
 import 'bloc/Auth_bloc/login_bloc/login_Bloc.dart';
@@ -25,11 +26,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_)=> SignupBloc()),
         BlocProvider(create: (_)=> LoginBloc()),
         BlocProvider(create: (_)=> OtpBloc()),
+        BlocProvider(create: (_)=> SplashBloc()),
       ],
       child: const MaterialApp(
         title: 'Flutter Demo',
         onGenerateRoute: Routes.onGenerateRoute,
-        initialRoute:  Routes.signup,
+        initialRoute:  Routes.splash,
       ),
     );
   }

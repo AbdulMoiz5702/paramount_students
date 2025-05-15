@@ -25,9 +25,7 @@ class OtpRepo {
           fromJson: OTPResponse.fromJson);
       if (response.statusCode == 200) {
         final accessToken = response.responseBody!.accessToken;
-        await SharedPrefServices.savePrefData(SharedPrefKeys.accessToken,
-          accessToken,
-        );
+        await SharedPrefServices.savePrefData(key:SharedPrefKeys.accessToken,value:accessToken,);
         Navigator.pushNamedAndRemoveUntil(context, Routes.bottomNav, (route) => false);
       }
       return response;

@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:paramount_student/bloc/Splash/splash_event.dart';
@@ -16,12 +15,21 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   void checkUserStatus(CheckUserStatus event,Emitter<SplashState> emit) async{
     try{
-      final userToken = await SharedPrefServices.getPrefData(SharedPrefKeys.accessToken);
-      if(userToken.isNotEmpty){
-        Navigator.pushNamedAndRemoveUntil(event.context, Routes.bottomNav, (_)=> false);
+      final accessToken = await SharedPrefServices.getPrefData(key:SharedPrefKeys.accessToken);
+      debugPrint('accessToken : $accessToken');
+      if(accessToken.isNotEmpty){
+        Future.microtask((){
+          Navigator.pushNamedAndRemoveUntil(event.context, Routes.bottomNav, (_)=> false);
+        });
+      }else{
+        Future.microtask((){
+          Navigator.pushNamedAndRemoveUntil(event.context, Routes.login, (_)=> false);
+        });
       }
     }catch(error){
-      Navigator.pushNamedAndRemoveUntil(event.context, Routes.login, (_)=> false);
+      Future.microtask((){
+        Navigator.pushNamedAndRemoveUntil(event.context, Routes.signup, (_)=> false);
+      });
     }
   }
 }

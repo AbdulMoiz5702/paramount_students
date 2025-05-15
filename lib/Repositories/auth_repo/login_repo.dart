@@ -28,7 +28,7 @@ class LoginRepo {
       if(response.statusCode == 200){
         final accessToken = response.responseBody.accessToken;
         if (accessToken != null) {
-          await SharedPrefServices.savePrefData(SharedPrefKeys.accessToken, accessToken,);
+          await SharedPrefServices.savePrefData(key:SharedPrefKeys.accessToken,value:  accessToken,);
           Navigator.pushNamedAndRemoveUntil(context, Routes.bottomNav, (route) => false,);
         }
       }

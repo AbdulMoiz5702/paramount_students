@@ -3,6 +3,7 @@ import '../../views/screens/Auth_screens/Login/login_screen.dart';
 import '../../views/screens/Auth_screens/Otp/Otp_screen.dart';
 import '../../views/screens/Auth_screens/Signup/signUp_screen.dart';
 import '../../views/screens/BottomNav/BottomNav_screen.dart';
+import '../../views/screens/Splash/splash_screen.dart';
 
 class Routes {
   // ----------------- auth routes ----------------------------- //
@@ -46,9 +47,16 @@ class Routes {
         final id = args['id'] as String;
         final email = args['email'] as String;
         return MaterialPageRoute(builder: (_) => OTPScreen(id: id,email: email,));
+
     // ----------------- bottom Nav routes ----------------------------- //
       case bottomNav:
         return MaterialPageRoute(builder: (_) => const BottomNavScreen());
+
+    // ----------------- splash routes ----------------------------- //
+      case splash:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
+
+    // ----------------- Route not found ----------------------------- //
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(
