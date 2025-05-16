@@ -14,6 +14,11 @@ class SharedPrefServices {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(key) ?? '';
   }
+
+  static Future<void> removePrefData({required String key}) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove(key);
+  }
 }
 
 class SharedPrefKeys{
