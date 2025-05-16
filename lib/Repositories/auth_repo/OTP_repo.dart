@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/cupertino.dart';
 import '../../core/exceptions/net_work_excptions.dart';
 import '../../core/helper_fuctions/snack_bar.dart';
