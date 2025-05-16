@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paramount_student/views/screens/Auth_screens/ForgotPassword/forgot_password-screen.dart';
 import '../../views/screens/Auth_screens/Login/login_screen.dart';
 import '../../views/screens/Auth_screens/Otp/Otp_screen.dart';
 import '../../views/screens/Auth_screens/Signup/signUp_screen.dart';
@@ -42,6 +43,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const SignupScreen());
       case login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case forgotPassword:
+        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
       case verifyOtp:
         final args = settings.arguments as Map<String, dynamic>;
         final id = args['id'] as String;

@@ -42,8 +42,15 @@ class LoginScreen extends StatelessWidget {
                   controller: provider.passwordController,
                   hintText: 'Password',
                   validate: (value) {
-                    // return FormValidators.validatePassword(value);
+                    return FormValidators.validatePassword(value);
                   }),
+              const Sized(height: 0.02),
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(onTap: (){
+                  Navigator.pushNamed(context, Routes.forgotPassword);
+                },child: lightText(title: 'Forgot Password?'),),
+              ),
               const Sized(height: 0.05),
               BlocBuilder<LoginBloc, LoginState>(
                 buildWhen: (pre,current) => pre.isLoginLoading != current.isLoginLoading,
