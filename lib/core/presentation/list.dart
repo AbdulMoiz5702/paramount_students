@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:paramount_student/core/presentation/app_colors.dart';
 
