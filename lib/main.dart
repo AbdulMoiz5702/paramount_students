@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:paramount_student/bloc/Auth_bloc/ForgotPassword/forgot_password_bloc.dart';
+import 'package:paramount_student/bloc/BottomNav/bottom_nav_bloc.dart';
 import 'package:paramount_student/bloc/Splash/splash_bloc.dart';
 import 'bloc/Auth_bloc/Otp_Bloc/otp_bloc.dart';
 import 'bloc/Auth_bloc/Signup_bloc/signup_bloc.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_)=> OtpBloc()),
         BlocProvider(create: (_)=> SplashBloc()),
         BlocProvider(create: (_)=> ForgotPasswordBloc()),
+        BlocProvider(create: (_)=> BottomNavBloc()),
       ],
       child: const MaterialApp(
         title: 'Flutter Demo',
