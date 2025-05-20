@@ -10,7 +10,10 @@ class LogoutRepo {
 
   static Future<void>  logoutUser({required BuildContext context}) async {
     try{
-      await SharedPrefServices.removePrefData(key: SharedPrefKeys.accessToken).then((value){
+      Future.wait([
+        SharedPrefServices.removePrefData(key: SharedPrefKeys.accessToken),
+        SharedPrefServices.removePrefData(key: SharedPrefKeys.currentUserId),
+      ]).then((value){
         Navigator.pushNamedAndRemoveUntil(context, Routes.login, (_)=> false);
       });
     }catch(error){

@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:paramount_student/core/helper_fuctions/current_access_token.dart';
 import '../../core/exceptions/net_work_excptions.dart';
 import '../../core/helper_fuctions/snack_bar.dart';
 import '../../core/routes/routes.dart';
@@ -27,8 +28,16 @@ class LoginRepo {
       );
       if(response.statusCode == 200){
         final accessToken = response.responseBody.accessToken;
+        final currentUserId = response.responseBody.user!.id;
         if (accessToken != null) {
-          await SharedPrefServices.savePrefData(key:SharedPrefKeys.accessToken,value:  accessToken,);
+           Future.wait([
+           SharedPrefServices.savePrefData(key:SharedPrefKeys.accessToken,value:  accessToken,),
+            SharedPrefServices.savePrefData(key:SharedPrefKeys.currentUserId,value:  currentUserId.toString(),),
+          ]);
+           CurrentUserSecrets.accessToken = accessToken;
+           CurrentUserSecrets.currentUserId = currentUserId.toString();
+          debugPrint('accessToken : $accessToken');
+          debugPrint('currentUserId : $currentUserId');
           Navigator.pushNamedAndRemoveUntil(context, Routes.bottomNav, (route) => false,);
         }
       }

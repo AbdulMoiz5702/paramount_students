@@ -50,6 +50,8 @@ dependencies:
   flutter_svg:
   otp_pin_field:
   curved_labeled_navigation_bar:
+  hydrated_bloc:
+  path_provider:
 
 dev_dependencies:
   flutter_test:
