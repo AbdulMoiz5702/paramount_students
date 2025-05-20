@@ -1,5 +1,26 @@
 
 
+class UserProfileModel {
+  final bool error;
+  final int statusCode;
+  final User responseBody;
+  UserProfileModel({
+    required this.error,
+    required this.statusCode,
+    required this.responseBody,
+  });
+  factory UserProfileModel.fromJson(Map<String, dynamic> json) {
+    return UserProfileModel(
+      error: json['error'] ?? false,
+      statusCode: json['statusCode'] ?? 0,
+      responseBody: User.fromJson(json['responseBody']),
+    );
+  }
+
+}
+
+
+
 class User {
   final int id;
   final String firstName;

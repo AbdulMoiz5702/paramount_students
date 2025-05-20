@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paramount_student/views/Porfile/Profile_Screen.dart';
 import 'package:paramount_student/views/screens/Auth_screens/ForgotPassword/forgot_password-screen.dart';
 import '../../views/screens/Auth_screens/Login/login_screen.dart';
 import '../../views/screens/Auth_screens/Otp/Otp_screen.dart';
@@ -23,7 +24,7 @@ class Routes {
   static const String bottomNav = 'bottomNav';
 
   // ----------------- profile screens routes ----------------------------- //
-
+  static const String profileScreen = 'profileScreen';
 
   // ----------------- Listing screens routes ----------------------------- //
 
@@ -50,6 +51,10 @@ class Routes {
         final id = args['id'] as String;
         final email = args['email'] as String;
         return MaterialPageRoute(builder: (_) => OTPScreen(id: id,email: email,));
+
+    // ----------------- profile screens routes ----------------------------- //
+      case profileScreen:
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
 
     // ----------------- bottom Nav routes ----------------------------- //
       case bottomNav:
