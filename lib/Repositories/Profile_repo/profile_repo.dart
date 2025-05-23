@@ -50,9 +50,9 @@ class ProfileRepo {
       bloc.firstNameController.text = user.firstName;
       bloc.lastNameController.text = user.lastName;
       bloc.phoneNumberController.text = user.phoneNumber ?? '';
-      bloc.universityNameController.text = user.();
-      bloc.universityLocationController = user();
-      bloc.cityController = user.l();
+      bloc.universityNameController = TextEditingController();
+      bloc.universityLocationController = TextEditingController();
+      bloc.cityController = TextEditingController();
       bloc.dateOfBirthController = TextEditingController();
       bloc.genderController = TextEditingController();
       bloc.countryController = TextEditingController();
