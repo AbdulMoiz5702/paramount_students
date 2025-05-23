@@ -1,25 +1,25 @@
 
 
-class UserProfileModel {
+class UserUpdateModel {
   final bool error;
   final int statusCode;
-  final UserPostBody responseBody;
-  UserProfileModel({
+  final UserUpdateBody responseBody;
+  UserUpdateModel({
     required this.error,
     required this.statusCode,
     required this.responseBody,
   });
-  factory UserProfileModel.fromJson(Map<String, dynamic> json) {
-    return UserProfileModel(
+  factory UserUpdateModel.fromJson(Map<String, dynamic> json) {
+    return UserUpdateModel(
       error: json['error'] ?? false,
       statusCode: json['statusCode'] ?? 0,
-      responseBody: UserPostBody.fromJson(json['responseBody']),
+      responseBody: UserUpdateBody.fromJson(json['responseBody']),
     );
   }
 
 }
 
-class UserPostBody {
+class UserUpdateBody {
   String firstName;
   String lastName;
   String phoneNumber;
@@ -31,7 +31,7 @@ class UserPostBody {
   String country;
   String courseOfStudy;
 
-  UserPostBody({
+  UserUpdateBody({
     required this.firstName,
     required this.lastName,
     required this.phoneNumber,
@@ -45,8 +45,8 @@ class UserPostBody {
   });
 
   // Convert from JSON
-  factory UserPostBody.fromJson(Map<String, dynamic> json) {
-    return UserPostBody(
+  factory UserUpdateBody.fromJson(Map<String, dynamic> json) {
+    return UserUpdateBody(
       firstName: json["first_name"],
       lastName: json["last_name"],
       phoneNumber: json["phone_number"],
