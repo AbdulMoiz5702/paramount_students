@@ -11,7 +11,6 @@ class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
   @override
   Widget build(BuildContext context) {
-
    Future.microtask((){
      context.read<ProfileBloc>().add(GetCurrentUser(id: int.parse(CurrentUserSecrets.currentUserId)));
    });

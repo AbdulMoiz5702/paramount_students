@@ -1,5 +1,7 @@
 
 
+
+
 class UserProfileModel {
   final bool error;
   final int statusCode;
