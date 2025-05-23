@@ -26,14 +26,14 @@ class ProfileRepo {
     }
   }
 
-  static Future<UserUpdateModel> updateCurrentUser({required int id,required UserUpdateBody userPostBody}) async {
+  static Future<UserUpdateModel> updateCurrentUser({required int id,required UserUpdateBody userUpdateBody}) async {
     try {
       final url = '${AppApis.updateCurrentUser}${id.toString()}';
       return await httpApiService.post(
         url,
         headers: HeadersFormats.bearerTokenHeaders(token: CurrentUserSecrets.accessToken,),
         fromJson: UserUpdateModel.fromJson,
-        body: userPostBody.toJson()
+        body: userUpdateBody.toJson()
       );
     } catch (error) {
       final errorMessage = ExceptionHandler.getMessage(error);

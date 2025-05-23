@@ -37,9 +37,14 @@ class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
   }
 
   Future<void> updateCurrentUser(UpdateCurrentUser event ,Emitter<ProfileState> emit ) async {
-    UserUpdateBody userPostModel = UserUpdateBody(firstName: firstNameController.text.trim(), lastName: lastNameController.text.trim(), phoneNumber: phoneNumberController.text.trim(), universityName: universityNameController.text.trim(), universityLocation: universityLocationController.text.trim(), city: cityController.text.trim(), dateOfBirth: dateOfBirthController.text.trim(), gender: genderController.text.trim(), country: countryController.text.trim(), courseOfStudy: courseOfStudyController.text.trim());
-
-    emit(state.copyWith(isUserUpdate: true));
+    try{
+      UserUpdateBody userUpdateBody = UserUpdateBody(firstName: firstNameController.text.trim(), lastName: lastNameController.text.trim(), phoneNumber: phoneNumberController.text.trim(), universityName: universityNameController.text.trim(), universityLocation: universityLocationController.text.trim(), city: cityController.text.trim(), dateOfBirth: dateOfBirthController.text.trim(), gender: genderController.text.trim(), country: countryController.text.trim(), courseOfStudy: courseOfStudyController.text.trim());
+      emit(state.copyWith(isUserUpdate: true));
+      await ProfileRepo.updateCurrentUser(id: event.id, userUpdateBody: userUpdateBody);
+      emit(state.copyWith(isUserUpdate: false));
+    }catch(error){
+      emit(state.copyWith(isUserUpdate: false));
+    }
   }
 
 
