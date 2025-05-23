@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:paramount_student/models/user_models/user_profile_model.dart';
 import 'package:paramount_student/views/Porfile/Profile_Screen.dart';
+import 'package:paramount_student/views/Porfile/Update_User_Profile.dart';
 import 'package:paramount_student/views/screens/Auth_screens/ForgotPassword/forgot_password-screen.dart';
 import '../../views/screens/Auth_screens/Login/login_screen.dart';
 import '../../views/screens/Auth_screens/Otp/Otp_screen.dart';
@@ -25,6 +27,7 @@ class Routes {
 
   // ----------------- profile screens routes ----------------------------- //
   static const String profileScreen = 'profileScreen';
+  static const String updateProfileScreen = 'UpdateUserProfile';
 
   // ----------------- Listing screens routes ----------------------------- //
 
@@ -55,6 +58,10 @@ class Routes {
     // ----------------- profile screens routes ----------------------------- //
       case profileScreen:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
+      case updateProfileScreen:
+        final args = settings.arguments as Map<String, dynamic>;
+        final data = args['data'] as User;
+        return MaterialPageRoute(builder: (_) => UpdateUserProfile(data: data,));
 
     // ----------------- bottom Nav routes ----------------------------- //
       case bottomNav:

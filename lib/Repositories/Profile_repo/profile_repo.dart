@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:paramount_student/bloc/Profile/profile_bloc.dart';
 import 'package:paramount_student/core/exceptions/net_work_excptions.dart';
 import 'package:paramount_student/core/helper_fuctions/current_access_token.dart';
 import 'package:paramount_student/core/services/Network_services/app_apis.dart';
@@ -39,6 +42,22 @@ class ProfileRepo {
       final errorMessage = ExceptionHandler.getMessage(error);
       throw Exception(errorMessage);
     }
+  }
+
+  static initializeControllersData({required User user,required BuildContext context}){
+    final bloc = context.read<ProfileBloc>();
+    Future.microtask((){
+      bloc.firstNameController.text = user.firstName;
+      bloc.lastNameController.text = user.lastName;
+      bloc.phoneNumberController.text = user.phoneNumber ?? '';
+      bloc.universityNameController.text = user.();
+      bloc.universityLocationController = user();
+      bloc.cityController = user.l();
+      bloc.dateOfBirthController = TextEditingController();
+      bloc.genderController = TextEditingController();
+      bloc.countryController = TextEditingController();
+      bloc.courseOfStudyController = TextEditingController();
+    });
   }
 
 
