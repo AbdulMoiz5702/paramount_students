@@ -50,13 +50,13 @@ class ProfileRepo {
       bloc.firstNameController.text = user.firstName;
       bloc.lastNameController.text = user.lastName;
       bloc.phoneNumberController.text = user.phoneNumber ?? '';
-      bloc.universityNameController = TextEditingController();
-      bloc.universityLocationController = TextEditingController();
-      bloc.cityController = TextEditingController();
-      bloc.dateOfBirthController = TextEditingController();
-      bloc.genderController = TextEditingController();
-      bloc.countryController = TextEditingController();
-      bloc.courseOfStudyController = TextEditingController();
+      bloc.universityNameController.text = user.userDetail?.universityName ?? '';
+      bloc.universityLocationController.text = user.userDetail?.universityLocation ?? '';
+      bloc.cityController.text = user.userDetail?.city ?? '';
+      bloc.dateOfBirthController.text = user.userDetail?.dateOfBirth ?? '';
+      bloc.genderController.text = user.userDetail?.dateOfBirth ?? '';
+      bloc.countryController.text = user.userDetail?.country ?? '';
+      bloc.courseOfStudyController.text = user.userDetail?.courseOfStudy ?? '';
     });
   }
 

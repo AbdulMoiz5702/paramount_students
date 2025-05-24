@@ -1,16 +1,14 @@
-
-
-
-
 class UserProfileModel {
   final bool error;
   final int statusCode;
   final User responseBody;
+
   UserProfileModel({
     required this.error,
     required this.statusCode,
     required this.responseBody,
   });
+
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
     return UserProfileModel(
       error: json['error'] ?? false,
@@ -19,9 +17,14 @@ class UserProfileModel {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'error': error,
+      'statusCode': statusCode,
+      'responseBody': responseBody.toJson(),
+    };
+  }
 }
-
-
 
 class User {
   final int id;
@@ -43,6 +46,7 @@ class User {
   final String? otpExpire;
   final String createdAt;
   final String updatedAt;
+  final UserDetail? userDetail;
 
   User({
     required this.id,
@@ -64,6 +68,7 @@ class User {
     this.otpExpire,
     required this.createdAt,
     required this.updatedAt,
+    this.userDetail,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -87,6 +92,9 @@ class User {
       otpExpire: json['otp_expire'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
+      userDetail: json['user_detail'] != null
+          ? UserDetail.fromJson(json['user_detail'])
+          : null,
     );
   }
 
@@ -109,6 +117,67 @@ class User {
       'active': active,
       'otp': otp,
       'otp_expire': otpExpire,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
+      'user_detail': userDetail?.toJson(),
+    };
+  }
+}
+
+class UserDetail {
+  final int id;
+  final int userId;
+  final String universityName;
+  final String universityLocation;
+  final String city;
+  final String dateOfBirth;
+  final String gender;
+  final String country;
+  final String courseOfStudy;
+  final String createdAt;
+  final String updatedAt;
+
+  UserDetail({
+    required this.id,
+    required this.userId,
+    required this.universityName,
+    required this.universityLocation,
+    required this.city,
+    required this.dateOfBirth,
+    required this.gender,
+    required this.country,
+    required this.courseOfStudy,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory UserDetail.fromJson(Map<String, dynamic> json) {
+    return UserDetail(
+      id: json['id'],
+      userId: json['user_id'],
+      universityName: json['university_name'],
+      universityLocation: json['university_location'],
+      city: json['city'],
+      dateOfBirth: json['date_of_birth'],
+      gender: json['gender'],
+      country: json['country'],
+      courseOfStudy: json['course_of_study'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'user_id': userId,
+      'university_name': universityName,
+      'university_location': universityLocation,
+      'city': city,
+      'date_of_birth': dateOfBirth,
+      'gender': gender,
+      'country': country,
+      'course_of_study': courseOfStudy,
       'created_at': createdAt,
       'updated_at': updatedAt,
     };
