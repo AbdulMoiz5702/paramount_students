@@ -21,3 +21,7 @@ class SharedPrefServices {
   }
 }
 
+class SharedPrefKeys{
+  static const accessToken = 'accessToken';
+  static const currentUserId = 'currentUserId';
+}
