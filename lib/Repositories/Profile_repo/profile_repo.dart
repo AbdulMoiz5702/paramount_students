@@ -44,7 +44,21 @@ class ProfileRepo {
     }
   }
 
-
+  static initializeControllersData({required User user,required BuildContext context}){
+    final bloc = context.read<ProfileBloc>();
+    Future.microtask((){
+      bloc.firstNameController.text = user.firstName;
+      bloc.lastNameController.text = user.lastName;
+      bloc.phoneNumberController.text = user.phoneNumber ?? '';
+      bloc.universityNameController.text = user.userDetail?.universityName ?? '';
+      bloc.universityLocationController.text = user.userDetail?.universityLocation ?? '';
+      bloc.cityController.text = user.userDetail?.city ?? '';
+      bloc.dateOfBirthController.text = user.userDetail?.dateOfBirth ?? '';
+      bloc.genderController.text = user.userDetail?.dateOfBirth ?? '';
+      bloc.countryController.text = user.userDetail?.country ?? '';
+      bloc.courseOfStudyController.text = user.userDetail?.courseOfStudy ?? '';
+    });
+  }
 
 
 }
