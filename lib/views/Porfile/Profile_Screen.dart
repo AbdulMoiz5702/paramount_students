@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:paramount_student/core/helper_fuctions/current_access_token.dart';
+import 'package:paramount_student/core/presentation/app_colors.dart';
 import 'package:paramount_student/views/common/custom_button.dart';
 import 'package:paramount_student/views/common/error_widgte.dart';
 import 'package:paramount_student/views/common/shimmer_widget.dart';
 import '../../bloc/Profile/profile_bloc.dart';
 import '../../bloc/Profile/profile_event.dart';
 import '../../bloc/Profile/profile_state.dart';
+import '../../core/routes/routes.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -18,7 +20,12 @@ class ProfileScreen extends StatelessWidget {
       );
     });
     return Scaffold(
-      appBar: AppBar(title: Text("User Profile")),
+      appBar: AppBar(title: Text("User Profile"),actions: [
+        TapIcon(color: AppColor.purpleColor,size: 40,iconData: Icons.edit, onTap: (){
+          final data = context.read<ProfileBloc>().state;
+          Navigator.pushNamed(context, Routes.updateProfileScreen,arguments: {'data':data.user});
+        }),
+      ],),
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           if (state.onGetUser == true) {
@@ -41,9 +48,7 @@ class ProfileScreen extends StatelessWidget {
                       if (state.image != null) {
                         return GestureDetector(
                           onTap: () {
-                            context.read<ProfileBloc>().add(
-                              PickUserProfilePic(context: context),
-                            );
+                            context.read<ProfileBloc>().add(PickUserProfilePic(context: context),);
                           },
                           child: CircleAvatar(
                             radius: 40,

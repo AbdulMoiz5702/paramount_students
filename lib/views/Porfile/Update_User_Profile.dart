@@ -61,18 +61,43 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                   ),
                 ],
               ),
-              CustomTextField(controller: bloc.lastNameController, hintText: 'Last Name', validate: (value){
-                return FormValidators.validateNormalField(value, 'Last Name');
-              }),
               Sized(height: 0.02,),
               CustomTextField(controller: bloc.courseOfStudyController, hintText: 'Course', validate: (value){
                 return FormValidators.validateNormalField(value, 'Course');
               }),
               Sized(height: 0.02,),
-              CustomTextField(controller: bloc.countryController, hintText: 'Country', validate: (value){
+              CustomTextField(controller: bloc.phoneNumberController, hintText: 'Phone Number', validate: (value){
+                return FormValidators.validatePhone('Phone Number');
+              }),
+              Sized(height: 0.02,),
+              CustomTextField(controller: bloc.universityNameController, hintText: 'University', validate: (value){
+                return FormValidators.validateNormalField(value, 'University');
+              }),
+              Sized(height: 0.02,),
+              CustomTextField(controller: bloc.universityLocationController, hintText: 'University Location', validate: (value){
+                return FormValidators.validateNormalField(value, 'University');
+              }),
+              Sized(height: 0.02,),
+              CustomTextField(controller: bloc.cityController, hintText: 'City', validate: (value){
+                return FormValidators.validateNormalField(value, 'City');
+              }),
+              Sized(height: 0.02,),
+              CustomTextField(controller: bloc.countryController, hintText: 'DOB', validate: (value){
+                return FormValidators.validateNormalField(value, 'DOB');
+              }),
+              Sized(height: 0.02,),
+              CustomTextField(controller: bloc.genderController, hintText: 'Gender', validate: (value){
+                return FormValidators.validateNormalField(value, 'Gender');
+              }),
+              Sized(height: 0.02,),
+              CustomTextField(controller: bloc.dateOfBirthController, hintText: 'Country', validate: (value){
                 return FormValidators.validateNormalField(value, 'Country');
               }),
               Sized(height: 0.02,),
+              CustomTextField(controller: bloc.courseOfStudyController, hintText: 'Course Of Study', validate: (value){
+                return FormValidators.validateNormalField(value, 'Course Of Study');
+              }),
+              Sized(height: 0.05,),
               BlocBuilder<ProfileBloc,ProfileState>(
                 buildWhen: (pre,current) => pre.isUserUpdate != current.isUserUpdate,
                   builder: (context ,state){

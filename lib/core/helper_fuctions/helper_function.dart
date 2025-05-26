@@ -33,7 +33,7 @@ class HelperFunctions {
     try {
       PermissionStatus status = await permission.request();
       if (status.isGranted) {
-        return true; // ✅ Permission granted
+        return true;
       } else if (status.isDenied) {
         debugPrint("⚠️ Permission denied. Retrying...");
         return await _retryPermission(permission, context);
@@ -83,7 +83,7 @@ class HelperFunctions {
     if (imageUrl.startsWith('http')) {
       return imageUrl;
     }
-    const String baseUrl = '${AppApis.domainUrl}/user_img';
+    const String baseUrl = '${AppApis.domainUrl}/storage/user_img';
     return '$baseUrl/$userId/$imageUrl';
   }
 

@@ -12,21 +12,40 @@ import 'profile_state.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
-  ProfileBloc() : super(ProfileState(user: null,onGetUser: false,errorMessage: '',isUserUpdate: false,image: null)) {
+  ProfileBloc()
+    : super(
+        ProfileState(
+          user: null,
+          onGetUser: false,
+          errorMessage: '',
+          isUserUpdate: false,
+          image: null,
+        ),
+      ) {
     on<GetCurrentUser>(getCurrentUser);
     on<UpdateCurrentUser>(updateCurrentUser);
     on<UploadUserProfilePic>(uploadUserProfilePic);
     on<PickUserProfilePic>(pickUserProfilePic);
   }
 
-  Future<void> uploadUserProfilePic(UploadUserProfilePic event ,Emitter<ProfileState> emit ) async {
-    try{
-      if(state.image != null){
-        await ProfileRepo.uploadUserProfilePic(id: event.id, image: state.image!,context: event.context);
-      }else{
-        SnackBarClass.warningSnackBar(context: event.context, message: 'Please Select an Image');
+  Future<void> uploadUserProfilePic(
+    UploadUserProfilePic event,
+    Emitter<ProfileState> emit,
+  ) async {
+    try {
+      if (state.image != null) {
+        await ProfileRepo.uploadUserProfilePic(
+          id: event.id,
+          image: state.image!,
+          context: event.context,
+        );
+      } else {
+        SnackBarClass.warningSnackBar(
+          context: event.context,
+          message: 'Please Select an Image',
+        );
       }
-    }catch(error){
+    } catch (error) {
       emit(state.copyWith(isUserUpdate: false));
     }
   }
@@ -42,9 +61,10 @@ class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
   TextEditingController countryController = TextEditingController();
   TextEditingController courseOfStudyController = TextEditingController();
 
-
-
-  Future<void> getCurrentUser(GetCurrentUser event, Emitter<ProfileState> emit) async {
+  Future<void> getCurrentUser(
+    GetCurrentUser event,
+    Emitter<ProfileState> emit,
+  ) async {
     try {
       emit(state.copyWith(onGetUser: true));
       final userProfile = await ProfileRepo.getCurrentUser(id: event.id);
@@ -55,35 +75,59 @@ class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
     }
   }
 
-  Future<void> pickUserProfilePic(PickUserProfilePic event,Emitter<ProfileState> emit) async{
-    File ? image = await HelperFunctions.pickImage(context: event.context);
-    if(image != null){
+  Future<void> pickUserProfilePic(
+    PickUserProfilePic event,
+    Emitter<ProfileState> emit,
+  ) async {
+    File? image = await HelperFunctions.pickImage(context: event.context);
+    if (image != null) {
       emit(state.copyWith(image: image));
     }
   }
 
-  Future<void> updateCurrentUser(UpdateCurrentUser event ,Emitter<ProfileState> emit ) async {
-    try{
-      UserUpdateBody userUpdateBody = UserUpdateBody(firstName: firstNameController.text.trim(), lastName: lastNameController.text.trim(), phoneNumber: phoneNumberController.text.trim(), universityName: universityNameController.text.trim(), universityLocation: universityLocationController.text.trim(), city: cityController.text.trim(), dateOfBirth: dateOfBirthController.text.trim(), gender: genderController.text.trim(), country: countryController.text.trim(), courseOfStudy: courseOfStudyController.text.trim());
+  Future<void> updateCurrentUser(
+    UpdateCurrentUser event,
+    Emitter<ProfileState> emit,
+  ) async {
+    try {
+      UserUpdateBody userUpdateBody = UserUpdateBody(
+        firstName: firstNameController.text.trim(),
+        lastName: lastNameController.text.trim(),
+        phoneNumber: phoneNumberController.text.trim(),
+        universityName: universityNameController.text.trim(),
+        universityLocation: universityLocationController.text.trim(),
+        city: cityController.text.trim(),
+        dateOfBirth: dateOfBirthController.text.trim(),
+        gender: genderController.text.trim(),
+        country: countryController.text.trim(),
+        courseOfStudy: courseOfStudyController.text.trim(),
+      );
       emit(state.copyWith(isUserUpdate: true));
-      await ProfileRepo.updateCurrentUser(id: event.id, userUpdateBody: userUpdateBody,context: event.context);
+      await ProfileRepo.updateCurrentUser(
+        id: event.id,
+        userUpdateBody: userUpdateBody,
+        context: event.context,
+      );
       emit(state.copyWith(isUserUpdate: false));
-    }catch(error){
+    } catch (error) {
       emit(state.copyWith(isUserUpdate: false));
     }
   }
-
-
 
   @override
   ProfileState? fromJson(Map<String, dynamic> json) {
     try {
-      return ProfileState(user: User.fromJson(json['user']),onGetUser: false,errorMessage: '',isUserUpdate: false,image: null);
+      return ProfileState(
+        user: User.fromJson(json['user']),
+        onGetUser: false,
+        errorMessage: '',
+        isUserUpdate: false,
+        image: null,
+      );
     } catch (_) {
       return null;
     }
   }
-
 
   @override
   Map<String, dynamic>? toJson(ProfileState state) {
@@ -94,8 +138,4 @@ class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
       return null;
     }
   }
-
-
-
 }
-

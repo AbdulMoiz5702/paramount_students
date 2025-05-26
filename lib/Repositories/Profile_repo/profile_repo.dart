@@ -36,13 +36,17 @@ class ProfileRepo {
   static Future<UserUpdateModel> updateCurrentUser({required int id,required UserUpdateBody userUpdateBody,required BuildContext context}) async {
     try {
       final url = '${AppApis.updateCurrentUser}${id.toString()}';
-      return await httpApiService.post(
+      final response =  await httpApiService.put(
         url,
         headers: HeadersFormats.bearerTokenHeaders(token: CurrentUserSecrets.accessToken,),
         fromJson: UserUpdateModel.fromJson,
         body: userUpdateBody.toJson()
       );
-    } catch (error) {
+      if(response.statusCode == 200){
+        Navigator.pop(context);
+      }
+      return response;
+    } catch (error,s) {
       ExceptionHandler.handle(error, context);
       rethrow;
     }
@@ -79,7 +83,7 @@ class ProfileRepo {
       bloc.universityLocationController.text = user.userDetail?.universityLocation ?? '';
       bloc.cityController.text = user.userDetail?.city ?? '';
       bloc.dateOfBirthController.text = user.userDetail?.dateOfBirth ?? '';
-      bloc.genderController.text = user.userDetail?.dateOfBirth ?? '';
+      bloc.genderController.text = user.userDetail?.gender ?? '';
       bloc.countryController.text = user.userDetail?.country ?? '';
       bloc.courseOfStudyController.text = user.userDetail?.courseOfStudy ?? '';
     });
