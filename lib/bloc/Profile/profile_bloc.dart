@@ -19,6 +19,18 @@ class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
     on<PickUserProfilePic>(pickUserProfilePic);
   }
 
+  Future<void> uploadUserProfilePic(UploadUserProfilePic event ,Emitter<ProfileState> emit ) async {
+    try{
+      if(state.image != null){
+        await ProfileRepo.uploadUserProfilePic(id: event.id, image: state.image!,context: event.context);
+      }else{
+        SnackBarClass.warningSnackBar(context: event.context, message: 'Please Select an Image');
+      }
+    }catch(error){
+      emit(state.copyWith(isUserUpdate: false));
+    }
+  }
+
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
@@ -29,6 +41,8 @@ class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
   TextEditingController genderController = TextEditingController();
   TextEditingController countryController = TextEditingController();
   TextEditingController courseOfStudyController = TextEditingController();
+
+
 
   Future<void> getCurrentUser(GetCurrentUser event, Emitter<ProfileState> emit) async {
     try {
@@ -59,17 +73,6 @@ class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
     }
   }
 
-  Future<void> uploadUserProfilePic(UploadUserProfilePic event ,Emitter<ProfileState> emit ) async {
-    try{
-      if(state.image != null){
-        await ProfileRepo.uploadUserProfilePic(id: event.id, image: state.image!,context: event.context);
-      }else{
-        SnackBarClass.warningSnackBar(context: event.context, message: 'Please Select an Image');
-      }
-    }catch(error){
-      emit(state.copyWith(isUserUpdate: false));
-    }
-  }
 
 
   @override

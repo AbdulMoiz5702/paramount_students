@@ -1,3 +1,9 @@
+
+
+
+import 'package:paramount_student/core/helper_fuctions/current_access_token.dart';
+import 'package:paramount_student/core/helper_fuctions/helper_function.dart';
+
 class UserProfileModel {
   final bool error;
   final int statusCode;
@@ -82,7 +88,7 @@ class User {
       dateOfBirth: json['date_of_birth'],
       gender: json['gender'],
       universityId: json['university_id'],
-      profilePicture: json['profile_picture'],
+      profilePicture: json['profile_picture'] != null ? HelperFunctions.getFullProfilePictureUrl(userId:int.parse(CurrentUserSecrets.currentUserId),imageUrl: json['profile_picture']):null,
       interests: List<dynamic>.from(json['interests'] ?? []),
       googleSigninId: json['google_signin_id'],
       googleExpire: json['google_expire'],

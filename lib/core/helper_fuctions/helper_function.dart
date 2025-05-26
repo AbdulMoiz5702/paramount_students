@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:paramount_student/core/services/Network_services/app_apis.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../dialogs/helper_dialogs.dart';
@@ -76,6 +77,14 @@ class HelperFunctions {
     if (months <= 0) return '0';
     double years = months / 12;
     return years.toStringAsFixed(decimalPlaces);
+  }
+
+  static String getFullProfilePictureUrl({required int userId,required String imageUrl}) {
+    if (imageUrl.startsWith('http')) {
+      return imageUrl;
+    }
+    const String baseUrl = '${AppApis.domainUrl}/user_img';
+    return '$baseUrl/$userId/$imageUrl';
   }
 
 }
