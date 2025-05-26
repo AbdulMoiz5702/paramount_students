@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 
 abstract class BaseApiService {
@@ -38,4 +40,12 @@ abstract class BaseApiService {
     String url, {
     required Map<String, String> headers,
   });
+
+   Future<T?> postImage<T>(
+       String url, {
+         required Map<String, String> headers,
+         required File imageFile,
+         required String imageFieldName ,
+         T Function(Map<String, dynamic>)? fromJson,
+       });
 }

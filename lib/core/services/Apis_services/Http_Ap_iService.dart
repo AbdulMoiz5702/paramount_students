@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../../exceptions/net_work_excptions.dart';
 import 'base_api_services.dart';
@@ -112,6 +112,35 @@ class HttpApiService implements BaseApiService {
       }
     } else {
       throw Exception('POST failed: ${response.statusCode} ${response.body}');
+    }
+  }
+
+  @override
+  Future<T?> postImage<T>(
+      String url, {
+        required Map<String, String> headers,
+        required File imageFile,
+        required String imageFieldName,
+        T Function(Map<String, dynamic>)? fromJson,
+      }) async {
+    final request = http.MultipartRequest('POST', Uri.parse(url))
+      ..headers.addAll(headers)
+      ..files.add(await http.MultipartFile.fromPath(imageFieldName, imageFile.path));
+     final streamedResponse = await request.send().timeout(const Duration(seconds: 15));
+     final response = await http.Response.fromStream(streamedResponse);
+     if (response.statusCode == 200) {
+      if (fromJson != null) {
+        final decoded = jsonDecode(response.body);
+        if (decoded is Map<String, dynamic>) {
+          return fromJson(decoded);
+        } else {
+          throw FormatException('Expected JSON object but got: ${response.body}');
+        }
+      } else {
+        return null;
+      }
+    } else {
+      throw Exception('Image POST failed: ${response.statusCode} ${response.body}');
     }
   }
 
