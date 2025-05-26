@@ -7,6 +7,7 @@ import '../../bloc/Profile/profile_bloc.dart';
 import '../../bloc/Profile/profile_event.dart';
 import '../../bloc/Profile/profile_state.dart';
 
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
   @override
@@ -29,6 +30,16 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  BlocBuilder<ProfileBloc, ProfileState>(
+                    buildWhen: (pre,current)=> pre.image != current.image,
+                      builder: (context,state){
+                        if (state.image != null){
+                          return CircleAvatar(radius: 40,backgroundImage:FileImage(state.image!,),);
+                        }else{
+                          return CircleAvatar(radius: 40,backgroundImage:NetworkImage(user.profilePicture!,),);
+                        }
+                      }),
+                  SizedBox(height: 8),
                   Text('Name: ${user.firstName} ${user.lastName}', style: TextStyle(fontSize: 20)),
                   SizedBox(height: 8),
                   Text('Email: ${user.email}'),

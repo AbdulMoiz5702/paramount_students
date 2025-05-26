@@ -22,3 +22,20 @@ class UpdateCurrentUser extends ProfileEvent {
   @override
   List<Object?> get props => [id];
 }
+
+class UploadUserProfilePic extends ProfileEvent {
+  final int id;
+  final BuildContext context;
+  UploadUserProfilePic({required this.id,required this.context});
+  @override
+  List<Object?> get props => [id];
+}
+
+
+
+class PickUserProfilePic extends ProfileEvent {
+  final BuildContext context;
+  PickUserProfilePic({required this.context});
+  @override
+  List<Object?> get props => [context];
+}
