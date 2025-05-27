@@ -88,7 +88,7 @@ class User {
       dateOfBirth: json['date_of_birth'],
       gender: json['gender'],
       universityId: json['university_id'],
-      profilePicture: json['profile_picture'] != null ? HelperFunctions.getFullProfilePictureUrl(userId:int.parse(CurrentUserSecrets.currentUserId),imageUrl: json['profile_picture']):null,
+      profilePicture: json['profile_picture'],
       interests: List<dynamic>.from(json['interests'] ?? []),
       googleSigninId: json['google_signin_id'],
       googleExpire: json['google_expire'],

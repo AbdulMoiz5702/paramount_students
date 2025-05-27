@@ -42,7 +42,8 @@ class LoginRepo {
         }
       }
       return response;
-    } catch (error) {
+    } catch (error,s) {
+      print('error $error $s');
       Future.microtask((){
         final errorMessage = ExceptionHandler.getMessage(error);
         if(ExceptionHandler.statusCode == 403){
