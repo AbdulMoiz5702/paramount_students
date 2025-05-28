@@ -11,7 +11,8 @@ import 'package:paramount_student/views/common/custom_button.dart';
 import 'package:paramount_student/views/common/custom_loading.dart';
 import 'package:paramount_student/views/common/custom_sizedBox.dart';
 import 'package:paramount_student/views/common/custom_textfeild.dart';
-import '../../models/user_models/user_profile_model.dart';
+import '../../../models/user_models/user_profile_model.dart';
+
 
 
 class UpdateUserProfile extends StatefulWidget {

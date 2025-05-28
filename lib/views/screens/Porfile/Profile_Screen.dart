@@ -5,10 +5,12 @@ import 'package:paramount_student/core/presentation/app_colors.dart';
 import 'package:paramount_student/views/common/custom_button.dart';
 import 'package:paramount_student/views/common/error_widgte.dart';
 import 'package:paramount_student/views/common/shimmer_widget.dart';
-import '../../bloc/Profile/profile_bloc.dart';
-import '../../bloc/Profile/profile_event.dart';
-import '../../bloc/Profile/profile_state.dart';
-import '../../core/routes/routes.dart';
+
+import '../../../bloc/Profile/profile_bloc.dart';
+import '../../../bloc/Profile/profile_event.dart';
+import '../../../bloc/Profile/profile_state.dart';
+import '../../../core/routes/routes.dart';
+
 
 
 
@@ -19,8 +21,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.microtask(() {
-      context.read<ProfileBloc>().add(
-        GetCurrentUser(id: int.parse(CurrentUserSecrets.currentUserId)),
+      context.read<ProfileBloc>().add(GetCurrentUser(id: int.parse(CurrentUserSecrets.currentUserId)),
       );
     });
     return Scaffold(

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:paramount_student/models/user_models/user_profile_model.dart';
-import 'package:paramount_student/views/Porfile/Profile_Screen.dart';
-import 'package:paramount_student/views/Porfile/Update_User_Profile.dart';
 import 'package:paramount_student/views/screens/Auth_screens/ForgotPassword/forgot_password-screen.dart';
 import '../../views/screens/Auth_screens/Login/login_screen.dart';
 import '../../views/screens/Auth_screens/Otp/Otp_screen.dart';
 import '../../views/screens/Auth_screens/Signup/signUp_screen.dart';
 import '../../views/screens/BottomNav/BottomNav_screen.dart';
+import '../../views/screens/Porfile/Profile_Screen.dart';
+import '../../views/screens/Porfile/Update_User_Profile.dart';
 import '../../views/screens/Splash/splash_screen.dart';
 
 class Routes {
