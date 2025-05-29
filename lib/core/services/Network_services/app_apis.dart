@@ -7,7 +7,7 @@ class AppApis {
 
 
   // Auth Apis
-  static const String  _ip = '192.168.137.1';
+  static const String  _ip = '192.168.1.8';
   static const String _baseUrl = 'http://$_ip:8001/api';
   static const String signup = '$_baseUrl/auth/signup';
   static const String login = '$_baseUrl/auth/login';
@@ -28,5 +28,13 @@ class AppApis {
   static const String getSingleOrganization = '$_baseUrl/v1/organizations/';
   static const String postOrganizations = '$_baseUrl/v1/organizations';
   static const String deleteOrganizations = '$_baseUrl/v1/organizations/';
+
+  // Communities Apis
+  static const String getAllCommunities = '$_baseUrl/v1/communities/all';
+  static const String getSingleCommunities = '$_baseUrl/v1/communities/all';
+
+  // Events Apis
+  static const String getAllEvents = '$_baseUrl/v1/events/all';
+  static const String getSingleEvents = '$_baseUrl/v1/events/';
 
 }
