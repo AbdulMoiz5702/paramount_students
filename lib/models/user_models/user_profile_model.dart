@@ -1,9 +1,5 @@
 
 
-
-import 'package:paramount_student/core/helper_fuctions/current_access_token.dart';
-import 'package:paramount_student/core/helper_fuctions/helper_function.dart';
-
 class UserProfileModel {
   final bool error;
   final int statusCode;
@@ -21,14 +17,6 @@ class UserProfileModel {
       statusCode: json['statusCode'] ?? 0,
       responseBody: User.fromJson(json['responseBody']),
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'error': error,
-      'statusCode': statusCode,
-      'responseBody': responseBody.toJson(),
-    };
   }
 }
 
