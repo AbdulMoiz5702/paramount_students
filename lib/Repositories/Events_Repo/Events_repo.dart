@@ -9,10 +9,26 @@ class EventsRepo {
 
   static HttpApiService httpApiService = HttpApiService();
 
-  static Future<List<EventsModel>> getCurrentUser({required int id}) async {
+  static Future<List<EventsModel>> getAllEvents() async {
     try {
       final url = AppApis.getAllEvents;
       return await httpApiService.getList(
+        url,
+        headers: HeadersFormats.bearerTokenHeaders(
+          token: CurrentUserSecrets.accessToken,
+        ),
+        fromJson: EventsModel.fromJson,
+      );
+    } catch (error) {
+      final errorMessage = ExceptionHandler.getMessage(error);
+      throw Exception(errorMessage);
+    }
+  }
+
+  static Future<EventsModel> getSingleEvent({required int id}) async {
+    try {
+      final url = '${AppApis.getSingleEvents}${id.toString()}';
+      return await httpApiService.get(
         url,
         headers: HeadersFormats.bearerTokenHeaders(
           token: CurrentUserSecrets.accessToken,
