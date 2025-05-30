@@ -14,7 +14,7 @@ class CommunitiesRepo {
 
   static HttpApiService httpApiService = HttpApiService();
 
-  static Future<List<CommunitiesResponseModel>> getAllEvents() async {
+  static Future<List<CommunitiesResponseModel>> getAllCommunities() async {
     try {
       final url = AppApis.getAllCommunities;
       return await httpApiService.getList(
@@ -30,7 +30,7 @@ class CommunitiesRepo {
     }
   }
 
-  static Future<CommunitiesResponseModel> getSingleEvent({required int id}) async {
+  static Future<CommunitiesResponseModel> getSingleCommunities({required int id}) async {
     try {
       final url = '${AppApis.getSingleCommunities}${id.toString()}';
       return await httpApiService.get(

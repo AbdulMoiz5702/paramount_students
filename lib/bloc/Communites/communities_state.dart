@@ -3,8 +3,8 @@ import 'package:paramount_student/models/Communities_models/Communities_model.da
 
 class CommunitiesState extends Equatable {
   final bool isAllCommunities;
-  final List<CommunitiesResponseModel> allCommunities;
-  final CommunitiesResponseModel ? singleCommunities;
+  final List<CommunitiesResponseBody> allCommunities;
+  final CommunitiesResponseBody ? singleCommunities;
   final String errorMessage;
   final bool isSingleCommunities;
 
@@ -18,10 +18,10 @@ class CommunitiesState extends Equatable {
 
   CommunitiesState copyWith({
     bool? isAllCommunities,
-    List<CommunitiesResponseModel>? allCommunities,
+    List<CommunitiesResponseBody>? allCommunities,
     String? errorMessage,
     bool ? isSingleCommunities,
-    CommunitiesResponseModel ? singleCommunities
+    CommunitiesResponseBody ? singleCommunities
   }) {
     return CommunitiesState(
         isAllCommunities: isAllCommunities ?? this.isAllCommunities,

@@ -1,15 +1,38 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:paramount_student/Repositories/Communities_Repo/Communites_repo.dart';
 import 'package:paramount_student/models/Communities_models/Communities_model.dart';
-
 import 'communities_event.dart';
 import 'communities_state.dart';
 
 
 class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
   CommunitiesBloc() : super(const CommunitiesState(isAllCommunities: false,allCommunities: [],errorMessage: '',isSingleCommunities: false,singleCommunities: null)) {
-    on<CommunitiesEvent>();
+    on<GetSingleCommunities>(getSingleCommunities);
+    on<GetAllCommunities>(getAllCommunities);
   }
 
+
+  Future<void> getSingleCommunities(GetSingleCommunities event, Emitter<CommunitiesState> emit,) async {
+    try {
+      emit(state.copyWith(isSingleCommunities: true));
+      final currentEvent = await CommunitiesRepo.getSingleCommunities(id: event.id);
+      final data = currentEvent.responseBody;
+      emit(state.copyWith(singleCommunities: data, isSingleCommunities: false));
+    } catch (error) {
+      emit(state.copyWith(isSingleCommunities: false, errorMessage: error.toString()));
+    }
+  }
+
+  Future<void> getAllCommunities(GetAllCommunities event, Emitter<CommunitiesState> emit) async {
+    try {
+      emit(state.copyWith(isSingleCommunities: true));
+      final List<CommunitiesResponseModel> eventModels = await CommunitiesRepo.getAllCommunities();
+      final List<CommunitiesResponseBody> allEvents = eventModels.map((e) => e.responseBody).toList();
+      emit(state.copyWith(allCommunities: allEvents, isSingleCommunities: false));
+    } catch (error) {
+      emit(state.copyWith(isSingleCommunities: false, errorMessage: error.toString()));
+    }
+  }
 
 
 
@@ -17,7 +40,7 @@ class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
   CommunitiesState? fromJson(Map<String, dynamic> json) {
     try {
       final List<dynamic> eventsJsonList = json['events'];
-      final events = eventsJsonList.map((eventJson) => CommunitiesResponseModel.fromJson(eventJson)).toList();
+      final events = eventsJsonList.map((eventJson) => CommunitiesResponseBody.fromJson(eventJson)).toList();
       return CommunitiesState(
           isAllCommunities: false,
           allCommunities: events,

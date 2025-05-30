@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:paramount_student/bloc/Auth_bloc/ForgotPassword/forgot_password_bloc.dart';
 import 'package:paramount_student/bloc/BottomNav/bottom_nav_bloc.dart';
+import 'package:paramount_student/bloc/Communites/communities_bloc.dart';
+import 'package:paramount_student/bloc/Events/events_bloc.dart';
 import 'package:paramount_student/bloc/Profile/profile_bloc.dart';
 import 'package:paramount_student/bloc/Splash/splash_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -54,6 +56,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_)=> ForgotPasswordBloc()),
         BlocProvider(create: (_)=> BottomNavBloc()),
         BlocProvider(create: (_)=> ProfileBloc()),
+        BlocProvider(create: (_)=> EventsBloc()),
+        BlocProvider(create: (_)=> CommunitiesBloc()),
       ],
       child: const MaterialApp(
         title: 'Flutter Demo',
