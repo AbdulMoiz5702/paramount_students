@@ -6,8 +6,20 @@ import 'events_state.dart';
 
 
 class EventsBloc extends HydratedBloc<EventsEvent, EventsState> {
-  EventsBloc() : super(const EventsState(isAllEvents: false,events: [],errorMessage: '')) {
+  EventsBloc() : super(const EventsState(isAllEvents: false,allEvents: [],errorMessage: '',isSingleEvent: false,singleEvent: null)) {
     on<GetAllEvents>(getAllEvents);
+  }
+
+
+  Future<void> getSingleEvent(GetSingleEvent event, Emitter<EventsState> emit,) async {
+    try {
+      emit(state.copyWith(isSingleEvent: true));
+      final currentEvent = await EventsRepo.getSingleEvent(id: event.id);
+      final data = currentEvent.responseBody;
+      emit(state.copyWith(singleEvent: data, isSingleEvent: false));
+    } catch (error) {
+      emit(state.copyWith(isSingleEvent: false, errorMessage: error.toString()));
+    }
   }
 
 
@@ -16,7 +28,7 @@ class EventsBloc extends HydratedBloc<EventsEvent, EventsState> {
       emit(state.copyWith(isAllEvents: true));
       final List<EventsModel> eventModels = await EventsRepo.getAllEvents();
       final List<EventsResponseBody> allEvents = eventModels.map((e) => e.responseBody).toList();
-      emit(state.copyWith(events: allEvents, isAllEvents: false));
+      emit(state.copyWith(allEvents: allEvents, isAllEvents: false));
     } catch (error) {
       emit(state.copyWith(isAllEvents: false, errorMessage: error.toString()));
     }
@@ -29,8 +41,10 @@ class EventsBloc extends HydratedBloc<EventsEvent, EventsState> {
       final events = eventsJsonList.map((eventJson) => EventsResponseBody.fromJson(eventJson)).toList();
       return EventsState(
         isAllEvents: false,
-        events: events,
+        allEvents: events,
+        isSingleEvent: false,
         errorMessage: '',
+          singleEvent: null
       );
     } catch (_) {
       return null;
