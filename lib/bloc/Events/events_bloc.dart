@@ -8,6 +8,7 @@ import 'events_state.dart';
 class EventsBloc extends HydratedBloc<EventsEvent, EventsState> {
   EventsBloc() : super(const EventsState(isAllEvents: false,allEvents: [],errorMessage: '',isSingleEvent: false,singleEvent: null)) {
     on<GetAllEvents>(getAllEvents);
+    on<GetSingleEvent>(getSingleEvent);
   }
 
 
