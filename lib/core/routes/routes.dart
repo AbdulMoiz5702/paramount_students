@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paramount_student/models/user_models/user_profile_model.dart';
 import 'package:paramount_student/views/screens/Auth_screens/ForgotPassword/forgot_password-screen.dart';
+import 'package:paramount_student/views/screens/home/Home_screen.dart';
 import '../../views/screens/Auth_screens/Login/login_screen.dart';
 import '../../views/screens/Auth_screens/Otp/Otp_screen.dart';
 import '../../views/screens/Auth_screens/Signup/signUp_screen.dart';
@@ -63,6 +64,10 @@ class Routes {
         final args = settings.arguments as Map<String, dynamic>;
         final data = args['data'] as User;
         return MaterialPageRoute(builder: (_) => UpdateUserProfile(data: data,));
+
+    // ----------------- Home Screens routes ----------------------------- //
+      case homeScreen:
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
 
     // ----------------- bottom Nav routes ----------------------------- //
       case bottomNav:
