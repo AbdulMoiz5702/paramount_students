@@ -3,8 +3,8 @@ import 'package:paramount_student/models/Events_models/Events_model.dart';
 
  class EventsState extends Equatable {
    final bool isAllEvents;
-   final List<EventsResponseBody> allEvents;
-   final EventsResponseBody ? singleEvent;
+   final List<EventsModel> allEvents;
+   final EventsModel ? singleEvent;
    final String errorMessage;
    final bool isSingleEvent;
 
@@ -18,10 +18,10 @@ import 'package:paramount_student/models/Events_models/Events_model.dart';
 
    EventsState copyWith({
      bool? isAllEvents,
-     List<EventsResponseBody>? allEvents,
+     List<EventsModel>? allEvents,
      String? errorMessage,
      bool ? isSingleEvent,
-     EventsResponseBody ? singleEvent
+     EventsModel ? singleEvent
    }) {
      return EventsState(
        isAllEvents: isAllEvents ?? this.isAllEvents,
@@ -35,5 +35,12 @@ import 'package:paramount_student/models/Events_models/Events_model.dart';
   @override
   List<Object?> get props => [isAllEvents,allEvents,errorMessage,isSingleEvent,singleEvent];
  }
+
+
+extension EventsStateExtension on EventsState {
+  List<EventsModel> get allEventsModels => allEvents;
+}
+
+
 
 

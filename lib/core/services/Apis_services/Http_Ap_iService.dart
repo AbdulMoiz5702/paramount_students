@@ -144,4 +144,21 @@ class HttpApiService implements BaseApiService {
     }
   }
 
+  @override
+  Future<T> postGetter<T>(
+      String url, {
+        required Map<String, String> headers,
+        required T Function(Map<String, dynamic>) fromJson,
+      }) async {
+    final response = await http.post(Uri.parse(url), headers: headers);
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      return fromJson(data);
+    } else {
+      throw Exception('PostGetter failed: ${response.statusCode} ${response.body}');
+    }
+  }
+
+
 }

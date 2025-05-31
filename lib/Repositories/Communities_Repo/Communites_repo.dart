@@ -2,6 +2,7 @@
 
 
 
+import 'package:flutter/foundation.dart';
 import 'package:paramount_student/models/Communities_models/Communities_model.dart';
 
 import '../../core/exceptions/net_work_excptions.dart';
@@ -14,17 +15,19 @@ class CommunitiesRepo {
 
   static HttpApiService httpApiService = HttpApiService();
 
-  static Future<List<CommunitiesResponseModel>> getAllCommunities() async {
+  static Future<CommunitiesResponseModel> getAllCommunities() async {
     try {
       final url = AppApis.getAllCommunities;
-      return await httpApiService.getList(
+      return await httpApiService.postGetter(
         url,
         headers: HeadersFormats.bearerTokenHeaders(
           token: CurrentUserSecrets.accessToken,
         ),
-        fromJson: CommunitiesResponseModel.fromJson,
+        fromJson:(json) => CommunitiesResponseModel.fromJson(json),
       );
-    } catch (error) {
+
+    } catch (error,stackTrace) {
+      debugPrint('getAllCommunities $error $stackTrace');
       final errorMessage = ExceptionHandler.getMessage(error);
       throw Exception(errorMessage);
     }

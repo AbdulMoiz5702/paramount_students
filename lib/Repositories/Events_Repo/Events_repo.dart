@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:paramount_student/core/services/Network_services/app_apis.dart';
 import 'package:paramount_student/models/Events_models/Events_model.dart';
 import '../../core/exceptions/net_work_excptions.dart';
@@ -9,23 +10,24 @@ class EventsRepo {
 
   static HttpApiService httpApiService = HttpApiService();
 
-  static Future<List<EventsModel>> getAllEvents() async {
+  static Future<EventsResponseModel> getAllEvents() async {
     try {
       final url = AppApis.getAllEvents;
-      return await httpApiService.getList(
+      return await httpApiService.postGetter(
         url,
         headers: HeadersFormats.bearerTokenHeaders(
           token: CurrentUserSecrets.accessToken,
         ),
-        fromJson: EventsModel.fromJson,
+        fromJson:  (json) => EventsResponseModel.fromJson(json),
       );
-    } catch (error) {
+    } catch (error,stackTrace) {
+      debugPrint('getAllEvents $error $stackTrace');
       final errorMessage = ExceptionHandler.getMessage(error);
       throw Exception(errorMessage);
     }
   }
 
-  static Future<EventsModel> getSingleEvent({required int id}) async {
+  static Future<EventsResponseModel> getSingleEvent({required int id}) async {
     try {
       final url = '${AppApis.getSingleEvents}${id.toString()}';
       return await httpApiService.get(
@@ -33,7 +35,7 @@ class EventsRepo {
         headers: HeadersFormats.bearerTokenHeaders(
           token: CurrentUserSecrets.accessToken,
         ),
-        fromJson: EventsModel.fromJson,
+        fromJson: EventsResponseModel.fromJson,
       );
     } catch (error) {
       final errorMessage = ExceptionHandler.getMessage(error);

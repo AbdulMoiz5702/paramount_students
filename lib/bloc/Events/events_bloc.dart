@@ -13,6 +13,22 @@ class EventsBloc extends HydratedBloc<EventsEvent, EventsState> {
   }
 
 
+
+
+
+  Future<void> getAllEvents(GetAllEvents event, Emitter<EventsState> emit) async {
+    try {
+      emit(state.copyWith(isAllEvents: true));
+      final EventsResponseModel responseModel = await EventsRepo.getAllEvents();
+      final EventsResponseBody body = EventsResponseBody.fromJson(responseModel.responseBody.toJson());
+      final List<EventsModel> allEvents = body.data;
+      emit(state.copyWith(allEvents: allEvents, isAllEvents: false));
+    } catch (error) {
+      emit(state.copyWith(isAllEvents: false, errorMessage: error.toString()));
+    }
+  }
+
+
   Future<void> getSingleEvent(GetSingleEvent event, Emitter<EventsState> emit,) async {
     try {
       emit(state.copyWith(isSingleEvent: true));
@@ -24,23 +40,11 @@ class EventsBloc extends HydratedBloc<EventsEvent, EventsState> {
     }
   }
 
-
-  Future<void> getAllEvents(GetAllEvents event, Emitter<EventsState> emit) async {
-    try {
-      emit(state.copyWith(isAllEvents: true));
-      final List<EventsModel> eventModels = await EventsRepo.getAllEvents();
-      final List<EventsResponseBody> allEvents = eventModels.map((e) => e.responseBody).toList();
-      emit(state.copyWith(allEvents: allEvents, isAllEvents: false));
-    } catch (error) {
-      emit(state.copyWith(isAllEvents: false, errorMessage: error.toString()));
-    }
-  }
-
   @override
   EventsState? fromJson(Map<String, dynamic> json) {
     try {
       final List<dynamic> eventsJsonList = json[BlocKeys.eventsKey];
-      final events = eventsJsonList.map((eventJson) => EventsResponseBody.fromJson(eventJson)).toList();
+      final events = eventsJsonList.map((eventJson) => EventsModel.fromJson(eventJson)).toList();
       return EventsState(
         isAllEvents: false,
         allEvents: events,

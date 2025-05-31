@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:paramount_student/bloc/Communites/communities_state.dart';
 import 'package:paramount_student/views/common/custom_sizedBox.dart';
 import 'package:paramount_student/views/common/shimmer_widget.dart';
 import 'package:paramount_student/views/common/text_widgets.dart';
@@ -36,6 +35,13 @@ class HomeScreen extends StatelessWidget {
               textAlign: TextAlign.center
             ),
           );
+        }else if(eventsState.allEvents.isEmpty && communitiesState.allCommunities.isEmpty){
+          return Center(
+            child: mediumText(
+                title: 'Ops No listing found',
+                textAlign: TextAlign.center
+            ),
+          );
         } else {
           return SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -51,8 +57,8 @@ class HomeScreen extends StatelessWidget {
                   width: MediaQuery.sizeOf(context).width,
                   child: Row(
                     children: List.generate(
-                      communitiesState.allCommunityModels.length, (index) {
-                        final community = communitiesState.allCommunityModels[index];
+                      communitiesState.allCommunities.length, (index) {
+                        final community = communitiesState.allCommunities[index];
                         return Container(
                           margin: EdgeInsets.symmetric(horizontal: 5),
                           height: MediaQuery.sizeOf(context).height * 0.2,

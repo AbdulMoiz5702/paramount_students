@@ -13,6 +13,21 @@ class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
   }
 
 
+
+
+  Future<void> getAllCommunities(GetAllCommunities event, Emitter<CommunitiesState> emit) async {
+    try {
+      emit(state.copyWith(isAllCommunities: true));
+      final CommunitiesResponseModel responseModel = await CommunitiesRepo.getAllCommunities();
+      final CommunitiesResponseBody body = responseModel.responseBody;
+      final List<CommunityModel> allCommunities = body.data;
+      emit(state.copyWith(allCommunities: allCommunities, isAllCommunities: false));
+    } catch (error) {
+      emit(state.copyWith(isAllCommunities: false, errorMessage: error.toString()));
+    }
+  }
+
+
   Future<void> getSingleCommunities(GetSingleCommunities event, Emitter<CommunitiesState> emit,) async {
     try {
       emit(state.copyWith(isSingleCommunities: true));
@@ -24,24 +39,13 @@ class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
     }
   }
 
-  Future<void> getAllCommunities(GetAllCommunities event, Emitter<CommunitiesState> emit) async {
-    try {
-      emit(state.copyWith(isAllCommunities: true));
-      final List<CommunitiesResponseModel> eventModels = await CommunitiesRepo.getAllCommunities();
-      final List<CommunitiesResponseBody> allEvents = eventModels.map((e) => e.responseBody).toList();
-      emit(state.copyWith(allCommunities: allEvents, isAllCommunities: false));
-    } catch (error) {
-      emit(state.copyWith(isAllCommunities: false, errorMessage: error.toString()));
-    }
-  }
-
 
 
   @override
   CommunitiesState? fromJson(Map<String, dynamic> json) {
     try {
       final List<dynamic> eventsJsonList = json[BlocKeys.communitiesKey];
-      final events = eventsJsonList.map((eventJson) => CommunitiesResponseBody.fromJson(eventJson)).toList();
+      final events = eventsJsonList.map((eventJson) => CommunityModel.fromJson(eventJson)).toList();
       return CommunitiesState(
           isAllCommunities: false,
           allCommunities: events,

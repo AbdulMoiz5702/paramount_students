@@ -3,7 +3,7 @@ import 'package:paramount_student/models/Communities_models/Communities_model.da
 
 class CommunitiesState extends Equatable {
   final bool isAllCommunities;
-  final List<CommunitiesResponseBody> allCommunities;
+  final List<CommunityModel> allCommunities;
   final CommunitiesResponseBody ? singleCommunities;
   final String errorMessage;
   final bool isSingleCommunities;
@@ -18,7 +18,7 @@ class CommunitiesState extends Equatable {
 
   CommunitiesState copyWith({
     bool? isAllCommunities,
-    List<CommunitiesResponseBody>? allCommunities,
+    List<CommunityModel>? allCommunities,
     String? errorMessage,
     bool ? isSingleCommunities,
     CommunitiesResponseBody ? singleCommunities
@@ -36,7 +36,9 @@ class CommunitiesState extends Equatable {
   List<Object?> get props => [isAllCommunities,allCommunities,errorMessage,isSingleCommunities,singleCommunities];
 }
 
+
 extension CommunitiesStateExtension on CommunitiesState {
-  List<CommunityModel> get allCommunityModels =>
-      allCommunities.expand((responseBody) => responseBody.data).toList();
+  List<CommunityModel> get allEventsModels => allCommunities;
 }
+
+

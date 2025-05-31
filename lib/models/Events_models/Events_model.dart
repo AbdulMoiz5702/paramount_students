@@ -1,27 +1,58 @@
 import 'dart:convert';
 
 
-class EventsModel {
+class EventsResponseModel {
   final bool error;
   final int statusCode;
-  final EventsResponseBody responseBody;
+  final EventsModel responseBody;
 
-  EventsModel({
+  EventsResponseModel({
     required this.error,
     required this.statusCode,
     required this.responseBody,
   });
 
-  factory EventsModel.fromJson(Map<String, dynamic> json) {
-    return EventsModel(
+  factory EventsResponseModel.fromJson(Map<String, dynamic> json) {
+    return EventsResponseModel(
       error: json['error'] ?? false,
       statusCode: json['statusCode'] ?? 0,
-      responseBody: EventsResponseBody.fromJson(json['responseBody']),
+      responseBody: EventsModel.fromJson(json['responseBody']),
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'error': error,
+    'statusCode': statusCode,
+    'responseBody': responseBody.toJson(),
+  };
 }
 
 class EventsResponseBody {
+  final int currentPage;
+  final List<EventsModel> data;
+
+  EventsResponseBody({
+    required this.currentPage,
+    required this.data,
+  });
+
+  factory EventsResponseBody.fromJson(Map<String, dynamic> json) {
+    return EventsResponseBody(
+      currentPage: json['current_page'],
+      data: List<EventsModel>.from(
+        json['data'].map((item) => EventsModel.fromJson(item)),
+      ),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'current_page': currentPage,
+    'data': data.map((e) => e.toJson()).toList(),
+  };
+}
+
+
+class EventsModel {
   final int id;
   final String eventName;
   final String eventDate;
@@ -53,7 +84,7 @@ class EventsResponseBody {
   final int sold;
   final String communityName;
 
-  EventsResponseBody({
+  EventsModel({
     required this.id,
     required this.eventName,
     required this.eventDate,
@@ -86,8 +117,8 @@ class EventsResponseBody {
     required this.communityName,
   });
 
-  factory EventsResponseBody.fromJson(Map<String, dynamic> json) {
-    return EventsResponseBody(
+  factory EventsModel.fromJson(Map<String, dynamic> json) {
+    return EventsModel(
       id: json['id'],
       eventName: json['event_name'],
       eventDate: json['event_date'],
