@@ -1,6 +1,7 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:paramount_student/Repositories/Events_Repo/Events_repo.dart';
 import 'package:paramount_student/models/Events_models/Events_model.dart';
+import '../../core/services/Shared_Preferences_Services/Shared_Preferences_Services.dart';
 import 'events_event.dart';
 import 'events_state.dart';
 
@@ -38,7 +39,7 @@ class EventsBloc extends HydratedBloc<EventsEvent, EventsState> {
   @override
   EventsState? fromJson(Map<String, dynamic> json) {
     try {
-      final List<dynamic> eventsJsonList = json['events'];
+      final List<dynamic> eventsJsonList = json[BlocKeys.eventsKey];
       final events = eventsJsonList.map((eventJson) => EventsResponseBody.fromJson(eventJson)).toList();
       return EventsState(
         isAllEvents: false,
@@ -55,7 +56,14 @@ class EventsBloc extends HydratedBloc<EventsEvent, EventsState> {
 
   @override
   Map<String, dynamic>? toJson(EventsState state) {
-    throw UnimplementedError();
+    try {
+      return {
+        BlocKeys.eventsKey: state.allEvents.map((e) => e.toJson()).toList(),
+      };
+    } catch (_) {
+      return null;
+    }
   }
+
 
 }

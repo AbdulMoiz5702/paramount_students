@@ -1,11 +1,11 @@
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:paramount_student/core/helper_fuctions/helper_function.dart';
 import 'package:paramount_student/core/helper_fuctions/snack_bar.dart';
 import 'package:paramount_student/models/user_models/user_update_model.dart';
 import '../../Repositories/Profile_repo/profile_repo.dart';
+import '../../core/services/Shared_Preferences_Services/Shared_Preferences_Services.dart';
 import '../../models/user_models/user_profile_model.dart';
 import 'profile_event.dart';
 import 'profile_state.dart';
@@ -118,7 +118,7 @@ class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
   ProfileState? fromJson(Map<String, dynamic> json) {
     try {
       return ProfileState(
-        user: User.fromJson(json['user']),
+        user: User.fromJson(json[BlocKeys.userKey]),
         onGetUser: false,
         errorMessage: '',
         isUserUpdate: false,
@@ -133,7 +133,7 @@ class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
   Map<String, dynamic>? toJson(ProfileState state) {
     try {
       if (state.user == null) return null;
-      return {'user': state.user!.toJson()};
+      return {BlocKeys.userKey: state.user!.toJson()};
     } catch (_) {
       return null;
     }

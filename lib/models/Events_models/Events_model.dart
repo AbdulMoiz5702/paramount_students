@@ -120,6 +120,42 @@ class EventsResponseBody {
       communityName: json['community_name'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'event_name': eventName,
+      'event_date': eventDate,
+      'event_location': eventLocation,
+      'country': country,
+      'state': state,
+      'description': description,
+      'type': type,
+      'mode': mode,
+      'latitude': latitude,
+      'longitude': longitude,
+      'price': price,
+      'ticket_start_date': ticketStartDate,
+      'ticket_end_date': ticketEndDate,
+      'slot': slot,
+      'community_id': communityId,
+      'organization_id': organizationId,
+      'galleries': jsonEncode(galleries),
+      'status': status,
+      'is_rescheduled': isRescheduled ? 1 : 0,
+      'rescheduled_at': rescheduledAt,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
+      'formatted_event_date': formattedEventDate,
+      'city': city,
+      'country_code': countryCode,
+      'moderators': moderators.map((e) => e.toJson()).toList(),
+      'members': members.map((e) => e.toJson()).toList(),
+      'sold': sold,
+      'community_name': communityName,
+    };
+  }
+
 }
 
 
@@ -144,12 +180,28 @@ class Member {
       memberDetails: json['member_details'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'event_id': eventId,
+      'user_id': userId,
+      'member_details': memberDetails,
+    };
+  }
 }
+
 
 class Moderator {
   Moderator();
+
   factory Moderator.fromJson(Map<String, dynamic> json) {
-    return Moderator(); // Placeholder
+    return Moderator(); // Add fields later if needed
+  }
+
+  Map<String, dynamic> toJson() {
+    return {}; // Update when real fields are added
   }
 }
+
 

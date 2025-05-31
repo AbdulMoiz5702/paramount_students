@@ -25,3 +25,9 @@ class SharedPrefKeys{
   static const accessToken = 'accessToken';
   static const currentUserId = 'currentUserId';
 }
+
+class BlocKeys{
+  static const eventsKey = 'events';
+  static const communitiesKey = 'communities';
+  static const userKey = 'user';
+}

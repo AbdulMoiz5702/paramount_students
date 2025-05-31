@@ -1,5 +1,6 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:paramount_student/Repositories/Communities_Repo/Communites_repo.dart';
+import 'package:paramount_student/core/services/Shared_Preferences_Services/Shared_Preferences_Services.dart';
 import 'package:paramount_student/models/Communities_models/Communities_model.dart';
 import 'communities_event.dart';
 import 'communities_state.dart';
@@ -39,7 +40,7 @@ class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
   @override
   CommunitiesState? fromJson(Map<String, dynamic> json) {
     try {
-      final List<dynamic> eventsJsonList = json['events'];
+      final List<dynamic> eventsJsonList = json[BlocKeys.communitiesKey];
       final events = eventsJsonList.map((eventJson) => CommunitiesResponseBody.fromJson(eventJson)).toList();
       return CommunitiesState(
           isAllCommunities: false,
@@ -54,7 +55,14 @@ class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
   }
 
   @override
-  Map<String, dynamic>? toJson(state) {
-    throw UnimplementedError();
+  Map<String, dynamic>? toJson(CommunitiesState state) {
+    try {
+      return {
+        BlocKeys.communitiesKey: state.allCommunities.map((e) => e.toJson()).toList(),
+      };
+    } catch (_) {
+      return null;
+    }
   }
+
 }
