@@ -4,7 +4,7 @@ import 'dart:convert';
 class EventsResponseModel {
   final bool error;
   final int statusCode;
-  final EventsModel responseBody;
+  final EventsResponseBody responseBody; // <-- Use EventsResponseBody here
 
   EventsResponseModel({
     required this.error,
@@ -16,7 +16,7 @@ class EventsResponseModel {
     return EventsResponseModel(
       error: json['error'] ?? false,
       statusCode: json['statusCode'] ?? 0,
-      responseBody: EventsModel.fromJson(json['responseBody']),
+      responseBody: EventsResponseBody.fromJson(json['responseBody']),
     );
   }
 
@@ -26,6 +26,7 @@ class EventsResponseModel {
     'responseBody': responseBody.toJson(),
   };
 }
+
 
 class EventsResponseBody {
   final int currentPage;
@@ -70,7 +71,7 @@ class EventsModel {
   final int slot;
   final int communityId;
   final int organizationId;
-  final List<String> galleries;
+  final List<dynamic> galleries;
   final String status;
   final bool isRescheduled;
   final String? rescheduledAt;
@@ -118,6 +119,12 @@ class EventsModel {
   });
 
   factory EventsModel.fromJson(Map<String, dynamic> json) {
+    List<String> galleriesList = [];
+    if (json['galleries'] is String) {
+      galleriesList = List<String>.from(jsonDecode(json['galleries']));
+    } else if (json['galleries'] is List) {
+      galleriesList = List<String>.from(json['galleries']);
+    }
     return EventsModel(
       id: json['id'],
       eventName: json['event_name'],
@@ -136,7 +143,7 @@ class EventsModel {
       slot: json['slot'],
       communityId: json['community_id'],
       organizationId: json['organization_id'],
-      galleries: List<String>.from(jsonDecode(json['galleries'])),
+      galleries: galleriesList,
       status: json['status'],
       isRescheduled: json['is_rescheduled'] == 1,
       rescheduledAt: json['rescheduled_at'],

@@ -34,7 +34,7 @@ class EventsBloc extends HydratedBloc<EventsEvent, EventsState> {
       emit(state.copyWith(isSingleEvent: true));
       final currentEvent = await EventsRepo.getSingleEvent(id: event.id);
       final data = currentEvent.responseBody;
-      emit(state.copyWith(singleEvent: data, isSingleEvent: false));
+     // emit(state.copyWith(singleEvent: data, isSingleEvent: false));
     } catch (error) {
       emit(state.copyWith(isSingleEvent: false, errorMessage: error.toString()));
     }

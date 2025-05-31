@@ -55,24 +55,29 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.sizeOf(context).height * 0.2,
                   width: MediaQuery.sizeOf(context).width,
-                  child: Row(
-                    children: List.generate(
-                      communitiesState.allCommunities.length, (index) {
-                        final community = communitiesState.allCommunities[index];
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          height: MediaQuery.sizeOf(context).height * 0.2,
-                          width: MediaQuery.sizeOf(context).width * 0.4,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Column(
-                            children: [
-                              lightText(title: community.name),
-                            ],
-                          ),
-                        );
-                      },
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: BouncingScrollPhysics(),
+                    child: Row(
+                      children: List.generate(
+                        communitiesState.allCommunities.length, (index) {
+                          final community = communitiesState.allCommunities[index];
+                          return Container(
+                            margin: EdgeInsets.symmetric(horizontal: 5),
+                            height: MediaQuery.sizeOf(context).height * 0.15,
+                            width: MediaQuery.sizeOf(context).width * 0.3,
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade100,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              children: [
+                                lightText(title: community.name),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
