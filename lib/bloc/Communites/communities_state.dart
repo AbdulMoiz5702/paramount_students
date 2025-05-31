@@ -35,3 +35,8 @@ class CommunitiesState extends Equatable {
   @override
   List<Object?> get props => [isAllCommunities,allCommunities,errorMessage,isSingleCommunities,singleCommunities];
 }
+
+extension CommunitiesStateExtension on CommunitiesState {
+  List<CommunityModel> get allCommunityModels =>
+      allCommunities.expand((responseBody) => responseBody.data).toList();
+}

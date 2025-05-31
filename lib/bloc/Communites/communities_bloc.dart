@@ -25,12 +25,12 @@ class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
 
   Future<void> getAllCommunities(GetAllCommunities event, Emitter<CommunitiesState> emit) async {
     try {
-      emit(state.copyWith(isSingleCommunities: true));
+      emit(state.copyWith(isAllCommunities: true));
       final List<CommunitiesResponseModel> eventModels = await CommunitiesRepo.getAllCommunities();
       final List<CommunitiesResponseBody> allEvents = eventModels.map((e) => e.responseBody).toList();
-      emit(state.copyWith(allCommunities: allEvents, isSingleCommunities: false));
+      emit(state.copyWith(allCommunities: allEvents, isAllCommunities: false));
     } catch (error) {
-      emit(state.copyWith(isSingleCommunities: false, errorMessage: error.toString()));
+      emit(state.copyWith(isAllCommunities: false, errorMessage: error.toString()));
     }
   }
 

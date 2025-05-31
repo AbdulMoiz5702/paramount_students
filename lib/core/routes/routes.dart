@@ -33,6 +33,7 @@ class Routes {
 
 
   // ----------------- Home Screens routes ----------------------------- //
+  static const String homeScreen = 'HomeScreen';
 
   // ----------------- Follows screens routes ----------------------------- //
 
