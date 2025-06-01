@@ -6,7 +6,7 @@ import '../../models/Communities_models/Single_communit_response.dart';
 class CommunitiesState extends Equatable {
   final bool isAllCommunities;
   final List<CommunityModel> allCommunities;
-  final SingleCommunityResponseModel ? singleCommunities;
+  final SingleCommunityModel ? singleCommunities;
   final String errorMessage;
   final bool isSingleCommunities;
 
@@ -23,7 +23,7 @@ class CommunitiesState extends Equatable {
     List<CommunityModel>? allCommunities,
     String? errorMessage,
     bool ? isSingleCommunities,
-    SingleCommunityResponseModel ? singleCommunities
+    SingleCommunityModel ? singleCommunities
   }) {
     return CommunitiesState(
         isAllCommunities: isAllCommunities ?? this.isAllCommunities,
