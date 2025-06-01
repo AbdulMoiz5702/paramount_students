@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:paramount_student/models/Events_models/Single_Event_model.dart';
 import 'package:paramount_student/models/Events_models/Events_model.dart';
 
  class EventsState extends Equatable {
    final bool isAllEvents;
    final List<EventsModel> allEvents;
-   final EventsModel ? singleEvent;
+   final SingleEventsResponseBody ? singleEvent;
    final String errorMessage;
    final bool isSingleEvent;
 
@@ -21,7 +22,7 @@ import 'package:paramount_student/models/Events_models/Events_model.dart';
      List<EventsModel>? allEvents,
      String? errorMessage,
      bool ? isSingleEvent,
-     EventsModel ? singleEvent
+     SingleEventsResponseBody ? singleEvent
    }) {
      return EventsState(
        isAllEvents: isAllEvents ?? this.isAllEvents,
