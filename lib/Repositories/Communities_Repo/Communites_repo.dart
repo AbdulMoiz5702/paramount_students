@@ -10,6 +10,7 @@ import '../../core/helper_fuctions/current_access_token.dart';
 import '../../core/services/Apis_services/Http_Ap_iService.dart';
 import '../../core/services/Network_services/app_apis.dart';
 import '../../core/services/Network_services/headers_formats.dart';
+import '../../models/Communities_models/Single_communit_response.dart';
 
 class CommunitiesRepo {
 
@@ -33,7 +34,7 @@ class CommunitiesRepo {
     }
   }
 
-  static Future<CommunitiesResponseModel> getSingleCommunities({required int id}) async {
+  static Future<SingleCommunityResponseModel> getSingleCommunities({required int id}) async {
     try {
       final url = '${AppApis.getSingleCommunities}${id.toString()}';
       return await httpApiService.get(
@@ -41,7 +42,7 @@ class CommunitiesRepo {
         headers: HeadersFormats.bearerTokenHeaders(
           token: CurrentUserSecrets.accessToken,
         ),
-        fromJson: CommunitiesResponseModel.fromJson,
+        fromJson: SingleCommunityResponseModel.fromJson,
       );
     } catch (error) {
       final errorMessage = ExceptionHandler.getMessage(error);

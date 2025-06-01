@@ -32,7 +32,7 @@ class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
     try {
       emit(state.copyWith(isSingleCommunities: true));
       final currentEvent = await CommunitiesRepo.getSingleCommunities(id: event.id);
-      final data = currentEvent.responseBody;
+      final data = currentEvent;
       emit(state.copyWith(singleCommunities: data, isSingleCommunities: false));
     } catch (error) {
       emit(state.copyWith(isSingleCommunities: false, errorMessage: error.toString()));

@@ -5,6 +5,7 @@ import '../../core/exceptions/net_work_excptions.dart';
 import '../../core/helper_fuctions/current_access_token.dart';
 import '../../core/services/Apis_services/Http_Ap_iService.dart';
 import '../../core/services/Network_services/headers_formats.dart';
+import '../../models/Events_models/Single_Event_model.dart';
 
 class EventsRepo {
 
@@ -27,7 +28,7 @@ class EventsRepo {
     }
   }
 
-  static Future<EventsResponseModel> getSingleEvent({required int id}) async {
+  static Future<SingleEventsResponseModel> getSingleEvent({required int id}) async {
     try {
       final url = '${AppApis.getSingleEvents}${id.toString()}';
       return await httpApiService.get(
@@ -35,7 +36,7 @@ class EventsRepo {
         headers: HeadersFormats.bearerTokenHeaders(
           token: CurrentUserSecrets.accessToken,
         ),
-        fromJson: EventsResponseModel.fromJson,
+        fromJson: SingleEventsResponseModel.fromJson,
       );
     } catch (error) {
       final errorMessage = ExceptionHandler.getMessage(error);

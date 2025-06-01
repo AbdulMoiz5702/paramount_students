@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:paramount_student/models/Communities_models/Communities_model.dart';
 
+import '../../models/Communities_models/Single_communit_response.dart';
+
 class CommunitiesState extends Equatable {
   final bool isAllCommunities;
   final List<CommunityModel> allCommunities;
-  final CommunitiesResponseBody ? singleCommunities;
+  final SingleCommunityResponseModel ? singleCommunities;
   final String errorMessage;
   final bool isSingleCommunities;
 
@@ -21,7 +23,7 @@ class CommunitiesState extends Equatable {
     List<CommunityModel>? allCommunities,
     String? errorMessage,
     bool ? isSingleCommunities,
-    CommunitiesResponseBody ? singleCommunities
+    SingleCommunityResponseModel ? singleCommunities
   }) {
     return CommunitiesState(
         isAllCommunities: isAllCommunities ?? this.isAllCommunities,
