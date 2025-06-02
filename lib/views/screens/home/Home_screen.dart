@@ -7,6 +7,7 @@ import '../../../bloc/Communites/communities_bloc.dart';
 import '../../../bloc/Communites/communities_event.dart';
 import '../../../bloc/Events/events_bloc.dart';
 import '../../../bloc/Events/events_event.dart';
+import '../../../core/presentation/app_colors.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -63,17 +64,55 @@ class HomeScreen extends StatelessWidget {
                         communitiesState.allCommunities.length, (index) {
                           final community = communitiesState.allCommunities[index];
                           return Container(
-                            margin: EdgeInsets.symmetric(horizontal: 5),
-                            height: MediaQuery.sizeOf(context).height * 0.15,
-                            width: MediaQuery.sizeOf(context).width * 0.3,
+                            margin: const EdgeInsets.symmetric(horizontal: 5),
+                            height: MediaQuery.sizeOf(context).height * 0.2,
+                            width: MediaQuery.sizeOf(context).width * 0.4,
                             decoration: BoxDecoration(
-                              color: Colors.blue.shade100,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              children: [
-                                lightText(title: community.name),
+                              color: AppColor.lightGrey,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 4,
+                                  offset: Offset(2, 2),
+                                )
                               ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(30),
+                                    child: Image.network(
+                                      community.logoUrl,
+                                      height: 40,
+                                      width: 40,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) => Icon(Icons.image_not_supported),
+                                    ),
+                                  ),
+                                  mediumText(
+                                   title:   community.name,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  lightText(
+                                   title:  '${community.city}, ${community.country}',
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.people, size: 14, color: AppColor.accentColor),
+                                      SizedBox(width: 4),
+                                      lightText(
+                                        title: '${community.followers.length} Followers',
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },
