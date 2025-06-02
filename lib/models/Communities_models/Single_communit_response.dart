@@ -96,7 +96,7 @@ class SingleCommunityModel {
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
       numberOfFollowers: json['Number_of_Followers'] ?? 0,
-      followers: (json['followers'] as List).map((e) => Follower.fromJson(e)).toList(),
+      followers: (json['followers'] as List?)?.map((e) => Follower.fromJson(e)).toList() ?? [],
       interests: (json['interests'] as List).map((e) => Interest.fromJson(e)).toList(),
       moderators: (json['moderators'] as List).map((e) => Moderator.fromJson(e)).toList(),
       announcements: (json['announcements'] as List).map((e) => Announcement.fromJson(e)).toList(),
