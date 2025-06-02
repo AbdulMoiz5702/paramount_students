@@ -26,7 +26,6 @@ class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
     }
   }
 
-
   Future<void> getSingleCommunities(GetSingleCommunities event, Emitter<CommunitiesState> emit,) async {
     try {
       emit(state.copyWith(isSingleCommunities: true));
@@ -57,8 +56,6 @@ class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
       emit(state.copyWith(followCommunities: false));
     }
   }
-
-
 
   @override
   CommunitiesState? fromJson(Map<String, dynamic> json) {
