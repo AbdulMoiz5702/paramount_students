@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paramount_student/models/user_models/user_profile_model.dart';
 import 'package:paramount_student/views/screens/Auth_screens/ForgotPassword/forgot_password-screen.dart';
+import 'package:paramount_student/views/screens/Communites_Detial/communities_detail_screen.dart';
 import 'package:paramount_student/views/screens/home/Home_screen.dart';
 import '../../views/screens/Auth_screens/Login/login_screen.dart';
 import '../../views/screens/Auth_screens/Otp/Otp_screen.dart';
@@ -30,7 +31,8 @@ class Routes {
   static const String profileScreen = 'profileScreen';
   static const String updateProfileScreen = 'UpdateUserProfile';
 
-  // ----------------- Listing screens routes ----------------------------- //
+  // ----------------- Communities screens routes ----------------------------- //
+  static const String communitiesDetailScreen = 'CommunitiesDetailScreen';
 
 
   // ----------------- Home Screens routes ----------------------------- //
@@ -64,6 +66,13 @@ class Routes {
         final args = settings.arguments as Map<String, dynamic>;
         final data = args['data'] as User;
         return MaterialPageRoute(builder: (_) => UpdateUserProfile(data: data,));
+
+    // ----------------- Communities screens routes ----------------------------- //
+      case communitiesDetailScreen:
+        final args = settings.arguments as Map<String, dynamic>;
+        final id = args['id'] as int;
+        return MaterialPageRoute(builder: (_) => CommunitiesDetailScreen(id: id,));
+
 
     // ----------------- Home Screens routes ----------------------------- //
       case homeScreen:

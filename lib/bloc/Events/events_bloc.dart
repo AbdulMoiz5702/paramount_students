@@ -43,7 +43,7 @@ class EventsBloc extends HydratedBloc<EventsEvent, EventsState> {
   @override
   EventsState? fromJson(Map<String, dynamic> json) {
     try {
-      final List<dynamic> eventsJsonList = json[BlocKeys.eventsKey];
+      final List<dynamic> eventsJsonList = json['events'];
       final events = eventsJsonList.map((eventJson) => EventsModel.fromJson(eventJson)).toList();
       return EventsState(
         isAllEvents: false,
@@ -62,7 +62,7 @@ class EventsBloc extends HydratedBloc<EventsEvent, EventsState> {
   Map<String, dynamic>? toJson(EventsState state) {
     try {
       return {
-        BlocKeys.eventsKey: state.allEvents.map((e) => e.toJson()).toList(),
+        'events': state.allEvents.map((e) => e.toJson()).toList(),
       };
     } catch (_) {
       return null;

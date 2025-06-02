@@ -52,6 +52,7 @@ dependencies:
   curved_labeled_navigation_bar:
   hydrated_bloc:
   path_provider:
+  url_launcher:
 
 dev_dependencies:
   flutter_test:

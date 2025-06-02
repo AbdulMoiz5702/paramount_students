@@ -118,7 +118,7 @@ class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
   ProfileState? fromJson(Map<String, dynamic> json) {
     try {
       return ProfileState(
-        user: User.fromJson(json[BlocKeys.userKey]),
+        user: User.fromJson(json['user']),
         onGetUser: false,
         errorMessage: '',
         isUserUpdate: false,
@@ -133,7 +133,7 @@ class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
   Map<String, dynamic>? toJson(ProfileState state) {
     try {
       if (state.user == null) return null;
-      return {BlocKeys.userKey: state.user!.toJson()};
+      return {'user': state.user!.toJson()};
     } catch (_) {
       return null;
     }
