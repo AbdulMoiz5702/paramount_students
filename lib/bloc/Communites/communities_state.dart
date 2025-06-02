@@ -5,6 +5,7 @@ import '../../models/Communities_models/Single_communit_response.dart';
 
 class CommunitiesState extends Equatable {
   final bool isAllCommunities;
+  final bool followCommunities;
   final List<CommunityModel> allCommunities;
   final SingleCommunityModel ? singleCommunities;
   final String errorMessage;
@@ -16,9 +17,11 @@ class CommunitiesState extends Equatable {
     required this.errorMessage,
     required this.isSingleCommunities,
     required this.singleCommunities,
+    required this.followCommunities,
   });
 
   CommunitiesState copyWith({
+    bool ? followCommunities,
     bool? isAllCommunities,
     List<CommunityModel>? allCommunities,
     String? errorMessage,
@@ -30,12 +33,13 @@ class CommunitiesState extends Equatable {
         allCommunities: allCommunities ?? this.allCommunities,
         isSingleCommunities: isSingleCommunities ?? this.isSingleCommunities,
         errorMessage: errorMessage ?? this.errorMessage,
-        singleCommunities: singleCommunities ?? this.singleCommunities
+        singleCommunities: singleCommunities ?? this.singleCommunities,
+      followCommunities: followCommunities ?? this.followCommunities
     );
   }
 
   @override
-  List<Object?> get props => [isAllCommunities,allCommunities,errorMessage,isSingleCommunities,singleCommunities];
+  List<Object?> get props => [isAllCommunities,allCommunities,errorMessage,isSingleCommunities,singleCommunities,followCommunities];
 }
 
 

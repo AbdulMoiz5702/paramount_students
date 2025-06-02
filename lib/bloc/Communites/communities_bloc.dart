@@ -6,12 +6,12 @@ import 'communities_state.dart';
 
 
 class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
-  CommunitiesBloc() : super(const CommunitiesState(isAllCommunities: false,allCommunities: [],errorMessage: '',isSingleCommunities: false,singleCommunities: null)) {
+  CommunitiesBloc() : super(const CommunitiesState(isAllCommunities: false,allCommunities: [],errorMessage: '',isSingleCommunities: false,singleCommunities: null,followCommunities: false)) {
     on<GetSingleCommunities>(getSingleCommunities);
     on<GetAllCommunities>(getAllCommunities);
+    on<FollowCommunities>(followCommunities);
+    on<UnFollowCommunities>(unfollowCommunities);
   }
-
-
 
 
   Future<void> getAllCommunities(GetAllCommunities event, Emitter<CommunitiesState> emit) async {
@@ -38,6 +38,26 @@ class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
     }
   }
 
+  Future<void> followCommunities(FollowCommunities event, Emitter<CommunitiesState> emit) async {
+    try {
+      emit(state.copyWith(followCommunities: true));
+      await CommunitiesRepo.followCommunities(context: event.context, id: event.id);
+      emit(state.copyWith(followCommunities: false));
+    } catch (error) {
+      emit(state.copyWith(followCommunities: false));
+    }
+  }
+
+  Future<void> unfollowCommunities(UnFollowCommunities event, Emitter<CommunitiesState> emit) async {
+    try {
+      emit(state.copyWith(followCommunities: true));
+      await CommunitiesRepo.unfollowCommunities(context: event.context, id: event.id);
+      emit(state.copyWith(followCommunities: false));
+    } catch (error) {
+      emit(state.copyWith(followCommunities: false));
+    }
+  }
+
 
 
   @override
@@ -50,7 +70,8 @@ class CommunitiesBloc extends HydratedBloc<CommunitiesEvent, CommunitiesState> {
           allCommunities: events,
           isSingleCommunities: false,
           errorMessage: '',
-          singleCommunities: null
+          singleCommunities: null,
+          followCommunities: false
       );
     } catch (_) {
       return null;

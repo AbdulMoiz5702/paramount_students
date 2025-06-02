@@ -48,12 +48,12 @@ class CommunitiesDetailScreen extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.network(
-                          data.coverPhotoUrl,
+                          data.coverPhotoUrl ?? '',
                           width: double.infinity,
-                          height: 180,
+                          height: 200,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) => Container(
-                            height: 180,
+                            height: 200,
                             color: Colors.grey[300],
                             child: Icon(Icons.broken_image, size: 60),
                           ),
@@ -66,10 +66,10 @@ class CommunitiesDetailScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              data.name,
+                              data.name ?? '',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 22,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                                 shadows: [Shadow(color: Colors.black, blurRadius: 5)],
                               ),
@@ -84,24 +84,58 @@ class CommunitiesDetailScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
-
                   SizedBox(height: 15),
+
                   Center(
                     child: CircleAvatar(
-                      radius: 40,
-                      backgroundImage: NetworkImage(data.logoUrl),
+                      radius: 45,
+                      backgroundImage: NetworkImage(data.logoUrl ?? ''),
                       onBackgroundImageError: (_, __) => Icon(Icons.person, size: 40),
                     ),
                   ),
+
                   SizedBox(height: 10),
+
+                  // Follow and Like buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          // TODO: Follow/Unfollow logic
+                        },
+                        icon: Icon(Icons.person_add_alt),
+                        label: Text("Follow"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent,
+                          foregroundColor: Colors.white,
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      IconButton(
+                        onPressed: () {
+                          // TODO: Like logic
+                        },
+                        icon: Icon(Icons.favorite_border),
+                        color: Colors.red,
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 10),
+                  Divider(),
+
                   Text(
-                    data.description,
+                    data.description ?? '',
                     style: TextStyle(fontSize: 14),
                   ),
-                  SizedBox(height: 10),
+
+                  SizedBox(height: 15),
                   Row(
                     children: [
                       Icon(Icons.people, color: AppColor.accentColor, size: 18),
@@ -109,8 +143,10 @@ class CommunitiesDetailScreen extends StatelessWidget {
                       Text('${data.numberOfFollowers} followers'),
                     ],
                   ),
-                  SizedBox(height: 15),
+
+                  SizedBox(height: 20),
                   Text('Interests:', style: TextStyle(fontWeight: FontWeight.bold)),
+                  SizedBox(height: 5),
                   Wrap(
                     spacing: 8,
                     runSpacing: 4,
@@ -121,10 +157,11 @@ class CommunitiesDetailScreen extends StatelessWidget {
                       );
                     }).toList(),
                   ),
-                  SizedBox(height: 15),
+
+                  SizedBox(height: 20),
                   Text('Socials:', style: TextStyle(fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       if (data.instagramLink.isNotEmpty)
                         IconButton(
@@ -134,7 +171,7 @@ class CommunitiesDetailScreen extends StatelessWidget {
                       if (data.tiktokLink.isNotEmpty)
                         IconButton(
                           icon: Icon(Icons.music_note_outlined),
-                          onPressed: () => launchUrl(Uri.parse(data.tiktokLink)),
+                          onPressed: () => launchUrl(Uri.parse(data.tiktokLink!)),
                         ),
                       if (data.youtubeLink.isNotEmpty)
                         IconButton(
@@ -143,7 +180,8 @@ class CommunitiesDetailScreen extends StatelessWidget {
                         ),
                     ],
                   ),
-                  SizedBox(height: 15),
+
+                  SizedBox(height: 20),
                   if (data.galleries.isNotEmpty) ...[
                     Text('Gallery:', style: TextStyle(fontWeight: FontWeight.bold)),
                     SizedBox(height: 5),
@@ -161,31 +199,41 @@ class CommunitiesDetailScreen extends StatelessWidget {
                               height: 100,
                               width: 100,
                               fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  Icon(Icons.broken_image),
+                              errorBuilder: (context, error, stackTrace) => Icon(Icons.broken_image),
                             ),
                           );
                         },
                       ),
                     ),
-                    SizedBox(height: 15),
-                  ],
-                  if (data.moderators.isNotEmpty) ...[
-                    Text('Moderators:', style: TextStyle(fontWeight: FontWeight.bold)),
-                    ...data.moderators.map((mod) => Text('- ${mod['name'] ?? 'Moderator'}')).toList(),
-                    SizedBox(height: 15),
-                  ],
-                  if (data.announcements.isNotEmpty) ...[
-                    Text('Announcements:', style: TextStyle(fontWeight: FontWeight.bold)),
-                    ...data.announcements.map((a) {
-                      return ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: Text(a['title'] ?? 'Announcement'),
-                        subtitle: Text(a['description'] ?? ''),
-                      );
-                    }).toList(),
                   ],
 
+                  SizedBox(height: 20),
+                  if (data.moderators.isNotEmpty) ...[
+                    Text('Moderators:', style: TextStyle(fontWeight: FontWeight.bold)),
+                    ...List.generate(
+                      data.moderators.length,
+                          (index) {
+                        final mod = data.moderators[index];
+                        return Text('- ${mod.name}');
+                      },
+                    ),
+                    SizedBox(height: 15),
+                  ],
+
+                  if (data.announcements.isNotEmpty) ...[
+                    Text('Announcements:', style: TextStyle(fontWeight: FontWeight.bold)),
+                    ...List.generate(
+                      data.announcements.length,
+                          (index) {
+                        final a = data.announcements[index];
+                        return ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(a.title),
+                          subtitle: Text(a.description),
+                        );
+                      },
+                    ),
+                  ],
                 ],
               ),
             );

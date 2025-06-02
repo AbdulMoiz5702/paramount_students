@@ -32,6 +32,8 @@ class AppApis {
   // Communities Apis
   static const String getAllCommunities = '$_baseUrl/v1/communities/all';
   static const String getSingleCommunities = '$_baseUrl/v1/communities/';
+  static const String followCommunities = '$_baseUrl/v1/communities/';
+  static const String unfollowCommunities = '$_baseUrl/v1/communities/';
 
   // Events Apis
   static const String getAllEvents = '$_baseUrl/v1/events/all';

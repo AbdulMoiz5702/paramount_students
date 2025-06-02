@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 
+import 'dart:convert';
+
 class SingleCommunityResponseModel {
   final bool error;
   final int statusCode;
@@ -13,11 +15,12 @@ class SingleCommunityResponseModel {
     required this.responseBody,
   });
 
-  factory SingleCommunityResponseModel.fromJson(Map<String, dynamic> json) => SingleCommunityResponseModel(
-    error: json['error'],
-    statusCode: json['statusCode'],
-    responseBody: SingleCommunityModel.fromJson(json['responseBody']),
-  );
+  factory SingleCommunityResponseModel.fromJson(Map<String, dynamic> json) =>
+      SingleCommunityResponseModel(
+        error: json['error'],
+        statusCode: json['statusCode'],
+        responseBody: SingleCommunityModel.fromJson(json['responseBody']),
+      );
 
   Map<String, dynamic> toJson() => {
     'error': error,
@@ -42,10 +45,10 @@ class SingleCommunityModel {
   final String createdAt;
   final String updatedAt;
   final int numberOfFollowers;
-  final List<dynamic> followers;
+  final List<Follower> followers;
   final List<Interest> interests;
-  final List<dynamic> moderators;
-  final List<dynamic> announcements;
+  final List<Moderator> moderators;
+  final List<Announcement> announcements;
 
   SingleCommunityModel({
     required this.id,
@@ -93,10 +96,10 @@ class SingleCommunityModel {
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
       numberOfFollowers: json['Number_of_Followers'] ?? 0,
-      followers: json['followers'] ?? [],
+      followers: (json['followers'] as List).map((e) => Follower.fromJson(e)).toList(),
       interests: (json['interests'] as List).map((e) => Interest.fromJson(e)).toList(),
-      moderators: json['moderators'] ?? [],
-      announcements: json['announcements'] ?? [],
+      moderators: (json['moderators'] as List).map((e) => Moderator.fromJson(e)).toList(),
+      announcements: (json['announcements'] as List).map((e) => Announcement.fromJson(e)).toList(),
     );
   }
 
@@ -116,10 +119,66 @@ class SingleCommunityModel {
     'created_at': createdAt,
     'updated_at': updatedAt,
     'Number_of_Followers': numberOfFollowers,
-    'followers': followers,
+    'followers': followers.map((e) => e.toJson()).toList(),
     'interests': interests.map((e) => e.toJson()).toList(),
-    'moderators': moderators,
-    'announcements': announcements,
+    'moderators': moderators.map((e) => e.toJson()).toList(),
+    'announcements': announcements.map((e) => e.toJson()).toList(),
+  };
+}
+
+class Follower {
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String profilePicture;
+  final String createdAt;
+  final FollowerPivot pivot;
+
+  Follower({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.profilePicture,
+    required this.createdAt,
+    required this.pivot,
+  });
+
+  factory Follower.fromJson(Map<String, dynamic> json) => Follower(
+    id: json['id'],
+    firstName: json['first_name'],
+    lastName: json['last_name'],
+    profilePicture: json['profile_picture'],
+    createdAt: json['created_at'],
+    pivot: FollowerPivot.fromJson(json['pivot']),
+  );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'first_name': firstName,
+    'last_name': lastName,
+    'profile_picture': profilePicture,
+    'created_at': createdAt,
+    'pivot': pivot.toJson(),
+  };
+}
+
+class FollowerPivot {
+  final int communityId;
+  final int userId;
+
+  FollowerPivot({
+    required this.communityId,
+    required this.userId,
+  });
+
+  factory FollowerPivot.fromJson(Map<String, dynamic> json) => FollowerPivot(
+    communityId: json['community_id'],
+    userId: json['user_id'],
+  );
+
+  Map<String, dynamic> toJson() => {
+    'community_id': communityId,
+    'user_id': userId,
   };
 }
 
@@ -166,3 +225,35 @@ class Pivot {
     'interest_id': interestId,
   };
 }
+
+class Moderator {
+  final String name;
+
+  Moderator({required this.name});
+
+  factory Moderator.fromJson(Map<String, dynamic> json) => Moderator(
+    name: json['name'],
+  );
+
+  Map<String, dynamic> toJson() => {
+    'name': name,
+  };
+}
+
+class Announcement {
+  final String title;
+  final String description;
+  Announcement({required this.title, required this.description});
+  factory Announcement.fromJson(Map<String, dynamic> json) => Announcement(
+    title: json['title'],
+    description: json['description'],
+  );
+
+  Map<String, dynamic> toJson() => {
+    'title': title,
+    'description': description,
+  };
+}
+
+
+
