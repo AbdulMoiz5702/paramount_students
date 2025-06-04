@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:paramount_student/bloc/Auth_bloc/Logout/logout_bloc.dart';
+import 'package:paramount_student/bloc/Auth_bloc/Logout/logout_event.dart';
+import 'package:paramount_student/bloc/Auth_bloc/Logout/logout_state.dart';
 import 'package:paramount_student/core/helper_fuctions/current_access_token.dart';
 import 'package:paramount_student/core/presentation/app_colors.dart';
+import 'package:paramount_student/core/presentation/image_constant.dart';
 import 'package:paramount_student/views/common/custom_button.dart';
+import 'package:paramount_student/views/common/custom_loading.dart';
 import 'package:paramount_student/views/common/error_widgte.dart';
 import 'package:paramount_student/views/common/shimmer_widget.dart';
 
@@ -11,26 +16,34 @@ import '../../../bloc/Profile/profile_event.dart';
 import '../../../bloc/Profile/profile_state.dart';
 import '../../../core/routes/routes.dart';
 
-
-
-
-
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
   @override
   Widget build(BuildContext context) {
     Future.microtask(() {
-      context.read<ProfileBloc>().add(GetCurrentUser(id: int.parse(CurrentUserSecrets.currentUserId)),
+      context.read<ProfileBloc>().add(
+        GetCurrentUser(id: int.parse(CurrentUserSecrets.currentUserId)),
       );
     });
     return Scaffold(
-      appBar: AppBar(title: Text("User Profile"),actions: [
-        TapIcon(color: AppColor.purpleColor,size: 40,iconData: Icons.edit, onTap: (){
-          final data = context.read<ProfileBloc>().state;
-          Navigator.pushNamed(context, Routes.updateProfileScreen,arguments: {'data':data.user});
-        }),
-      ],),
+      appBar: AppBar(
+        title: Text("User Profile"),
+        actions: [
+          TapIcon(
+            color: AppColor.purpleColor,
+            size: 40,
+            iconData: Icons.edit,
+            onTap: () {
+              final data = context.read<ProfileBloc>().state;
+              Navigator.pushNamed(
+                context,
+                Routes.updateProfileScreen,
+                arguments: {'data': data.user},
+              );
+            },
+          ),
+        ],
+      ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           if (state.onGetUser == true) {
@@ -53,7 +66,9 @@ class ProfileScreen extends StatelessWidget {
                       if (state.image != null) {
                         return GestureDetector(
                           onTap: () {
-                            context.read<ProfileBloc>().add(PickUserProfilePic(context: context),);
+                            context.read<ProfileBloc>().add(
+                              PickUserProfilePic(context: context),
+                            );
                           },
                           child: CircleAvatar(
                             radius: 40,
@@ -97,7 +112,15 @@ class ProfileScreen extends StatelessWidget {
                   Text('Email: ${user.email}'),
                   SizedBox(height: 8),
                   Text('Gender: ${user.gender}'),
-                  // Add more fields as needed
+                  SizedBox(height: 8),
+                  BlocBuilder<LogoutBloc, LogoutState>(
+                    buildWhen: (pre,current)=> pre.isLogout != current.isLogout,
+                    builder: (context, state) {
+                      return state.isLogout == true ? CustomLoading(imagePath: ImageConstant.ic_loading_animation):  CustomButton(title: 'Logout', onTap: (){
+                        context.read<LogoutBloc>().add(LogoutCurrentUser(context: context));
+                      });
+                    },
+                  ),
                 ],
               ),
             );
