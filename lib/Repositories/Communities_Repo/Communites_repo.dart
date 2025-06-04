@@ -57,7 +57,7 @@ class CommunitiesRepo {
       final String url = '${AppApis.followCommunities}$id/follow';
       final response = await httpApiService.postWithoutToJson(
           url,
-          headers: HeadersFormats.defaultHeaders(),
+          headers: HeadersFormats.bearerTokenHeaders(token: CurrentUserSecrets.accessToken),
           fromJson: FollowUnFollowCommunityResponse.fromJson);
       if (response.statusCode == 200) {
         SnackBarClass.successSnackBar(context: context, message: '🎉 You\'re now following the community. Stay tuned for updates and announcements!');
@@ -77,7 +77,7 @@ class CommunitiesRepo {
       final String url = '${AppApis.unfollowCommunities}$id/unfollow';
       final response = await httpApiService.postWithoutToJson(
           url,
-          headers: HeadersFormats.defaultHeaders(),
+          headers: HeadersFormats.bearerTokenHeaders(token: CurrentUserSecrets.accessToken),
           fromJson: FollowUnFollowCommunityResponse.fromJson);
       if (response.statusCode == 200) {
         SnackBarClass.successSnackBar(context: context, message: '🎉 You\'re now following the community. Stay tuned for updates and announcements!');

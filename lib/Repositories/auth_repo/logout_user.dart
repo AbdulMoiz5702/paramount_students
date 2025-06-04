@@ -8,7 +8,7 @@ import '../../core/routes/routes.dart';
 class LogoutRepo {
 
 
-  static Future<void>  logoutUser({required BuildContext context}) async {
+  static Future<void>  logoutCurrentUser({required BuildContext context}) async {
     try{
       Future.wait([
         SharedPrefServices.removePrefData(key: SharedPrefKeys.accessToken),
