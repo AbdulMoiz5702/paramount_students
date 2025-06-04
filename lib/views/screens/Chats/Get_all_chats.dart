@@ -4,6 +4,7 @@ import 'package:paramount_student/bloc/Chats/chat_bloc.dart';
 import 'package:paramount_student/bloc/Chats/chat_event.dart';
 import 'package:paramount_student/core/helper_fuctions/date_formatter.dart';
 import 'package:paramount_student/core/helper_fuctions/helper_function.dart';
+import 'package:paramount_student/core/presentation/image_constant.dart';
 
 import '../../../core/presentation/app_colors.dart';
 import '../../common/custom_sizedBox.dart';
@@ -68,7 +69,7 @@ class GetAllChatsScreen extends StatelessWidget {
                           backgroundColor: AppColor.lightprimaryColor,
                           backgroundImage: chat.chatPartner.profilePicture != null
                               ? NetworkImage(chat.chatPartner.profilePicture!)
-                              : const AssetImage('assets/images/default_user.png') as ImageProvider,
+                              : const AssetImage(ImageConstant.ic_user_logo) as ImageProvider,
                         ),
                         title: mediumText(title: chat.chatPartner.name,),
                         subtitle: regularText(
