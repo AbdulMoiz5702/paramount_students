@@ -39,4 +39,9 @@ class AppApis {
   static const String getAllEvents = '$_baseUrl/v1/events/all';
   static const String getSingleEvents = '$_baseUrl/v1/events/';
 
+  // Chat Apis
+  static const String getAllChats = '$_baseUrl/v1/messages/user-messages/all';
+  static const String getSingleChats = '$_baseUrl/v1/messages/';
+  static const String sendChats = '$_baseUrl/v1/messages/send/';
+
 }

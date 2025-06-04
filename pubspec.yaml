@@ -53,6 +53,7 @@ dependencies:
   hydrated_bloc:
   path_provider:
   url_launcher:
+  pusher_channels_flutter:
 
 dev_dependencies:
   flutter_test:

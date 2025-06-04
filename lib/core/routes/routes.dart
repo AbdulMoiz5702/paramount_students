@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:paramount_student/bloc/Chats/chat_event.dart';
 import 'package:paramount_student/models/user_models/user_profile_model.dart';
 import 'package:paramount_student/views/screens/Auth_screens/ForgotPassword/forgot_password-screen.dart';
+import 'package:paramount_student/views/screens/Chats/Get_all_chats.dart';
 import 'package:paramount_student/views/screens/Communites_Detial/communities_detail_screen.dart';
 import 'package:paramount_student/views/screens/home/Home_screen.dart';
 import '../../views/screens/Auth_screens/Login/login_screen.dart';
@@ -38,7 +40,8 @@ class Routes {
   // ----------------- Home Screens routes ----------------------------- //
   static const String homeScreen = 'HomeScreen';
 
-  // ----------------- Follows screens routes ----------------------------- //
+  // ----------------- Chats screens routes ----------------------------- //
+  static const String getAllChats = 'GetAllChats';
 
   // ----------------- ReportListingScreen screens routes ----------------------------- //
 
@@ -72,6 +75,10 @@ class Routes {
         final args = settings.arguments as Map<String, dynamic>;
         final id = args['id'] as int;
         return MaterialPageRoute(builder: (_) => CommunitiesDetailScreen(id: id,));
+
+    // ----------------- Chats screens routes ----------------------------- //
+      case getAllChats:
+        return MaterialPageRoute(builder: (_) =>  const GetAllChatsScreen());
 
 
     // ----------------- Home Screens routes ----------------------------- //
