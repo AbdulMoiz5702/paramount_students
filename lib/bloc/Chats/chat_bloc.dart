@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:paramount_student/Repositories/Chat_Repo/Chat_Repo.dart';
 import '../../models/Chat_Models/All_chat_list.dart';
 import '../../models/Chat_Models/Chat_messages_model.dart';
+import '../../models/Chat_Models/Send_message_model.dart';
 import 'chat_event.dart';
 import 'chat_state.dart';
 
@@ -10,6 +12,8 @@ class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
     on<GetAllChats>(getAllChats);
   }
 
+
+  TextEditingController messageController = TextEditingController();
 
   Future<void> getAllChats(GetAllChats event, Emitter<ChatState> emit) async {
     try {
@@ -31,6 +35,13 @@ class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
       emit(state.copyWith(isChatsMessages: false, errorMessage: error.toString(),));
     }
   }
+
+  Future<void> sendChatsMessages(SendChatsMessages event, Emitter<ChatState> emit) async {
+    SendMessageRequest sendMessageRequest = SendMessageRequest(message: messageController.text.trim());
+    await ChatsRepo.sendChatsMessages(receiverId: event.receiverId,context:event.context,sendMessage: sendMessageRequest);
+  }
+
+
 
 
   @override
