@@ -1,11 +1,12 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:paramount_student/Repositories/Chat_Repo/Chat_Repo.dart';
 import '../../models/Chat_Models/All_chat_list.dart';
+import '../../models/Chat_Models/Chat_messages_model.dart';
 import 'chat_event.dart';
 import 'chat_state.dart';
 
 class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
-  ChatBloc() : super(ChatState(isAllChats: false,allChats: [],errorMessage: '')) {
+  ChatBloc() : super(ChatState(isAllChats: false,allChats: [],errorMessage: '',isChatsMessages: false,chatMessages: [])) {
     on<GetAllChats>(getAllChats);
   }
 
@@ -19,6 +20,18 @@ class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
       emit(state.copyWith(isAllChats: false, errorMessage: error.toString()));
     }
   }
+
+  Future<void> getChatMessagesChats(GetChatsMessages event, Emitter<ChatState> emit) async {
+    try {
+      emit(state.copyWith(isChatsMessages: true));
+      final ChatMessagesResponse responseModel = await ChatsRepo.getChatsMessages(id: event.id);
+      final List<ChatMessage> messages = responseModel.responseBody.data;
+      emit(state.copyWith(chatMessages: messages, isChatsMessages: false,));
+    } catch (error) {
+      emit(state.copyWith(isChatsMessages: false, errorMessage: error.toString(),));
+    }
+  }
+
 
   @override
   ChatState? fromJson(Map<String, dynamic> json) {

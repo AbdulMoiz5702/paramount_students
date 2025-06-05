@@ -38,7 +38,7 @@ class BottomNavScreen extends StatelessWidget {
           break;
         case 2:
           assetPath = ImageConstant.ic_add_bottom;
-          label = 'Sell';
+          label = 'Chat';
           heightFactor = 0.035;
           break;
         case 3:

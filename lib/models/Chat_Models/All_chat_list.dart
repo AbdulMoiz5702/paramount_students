@@ -1,7 +1,7 @@
 class ChatListResponse {
   final bool error;
   final int statusCode;
-  final List<ChatMessage> responseBody;
+  final List<ChatMessageBody> responseBody;
 
   ChatListResponse({
     required this.error,
@@ -14,7 +14,7 @@ class ChatListResponse {
       error: json['error'],
       statusCode: json['statusCode'],
       responseBody: (json['responseBody'] as List)
-          .map((e) => ChatMessage.fromJson(e))
+          .map((e) => ChatMessageBody.fromJson(e))
           .toList(),
     );
   }
@@ -27,7 +27,7 @@ class ChatListResponse {
 }
 
 
-class ChatMessage {
+class ChatMessageBody {
   final ChatPartner chatPartner;
   final String message;
   final DateTime createdAt;
@@ -35,7 +35,7 @@ class ChatMessage {
   final int receiverId;
   final int isRead;
 
-  ChatMessage({
+  ChatMessageBody({
     required this.chatPartner,
     required this.message,
     required this.createdAt,
@@ -44,7 +44,7 @@ class ChatMessage {
     required this.isRead,
   });
 
-  factory ChatMessage.fromJson(Map<String, dynamic> json) => ChatMessage(
+  factory ChatMessageBody.fromJson(Map<String, dynamic> json) => ChatMessageBody(
     chatPartner: ChatPartner.fromJson(json['chat_partner']),
     message: json['message'],
     createdAt: DateTime.parse(json['created_at']),

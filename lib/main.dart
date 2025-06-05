@@ -6,6 +6,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:paramount_student/bloc/Auth_bloc/ForgotPassword/forgot_password_bloc.dart';
 import 'package:paramount_student/bloc/Auth_bloc/Logout/logout_bloc.dart';
 import 'package:paramount_student/bloc/BottomNav/bottom_nav_bloc.dart';
+import 'package:paramount_student/bloc/Chats/chat_bloc.dart';
 import 'package:paramount_student/bloc/Communites/communities_bloc.dart';
 import 'package:paramount_student/bloc/Events/events_bloc.dart';
 import 'package:paramount_student/bloc/Profile/profile_bloc.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_)=> ProfileBloc()),
         BlocProvider(create: (_)=> EventsBloc()),
         BlocProvider(create: (_)=> CommunitiesBloc()),
+        BlocProvider(create: (_)=> ChatBloc()),
       ],
       child: const MaterialApp(
         title: 'Flutter Demo',

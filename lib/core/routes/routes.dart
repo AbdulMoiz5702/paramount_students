@@ -3,6 +3,7 @@ import 'package:paramount_student/bloc/Chats/chat_event.dart';
 import 'package:paramount_student/models/user_models/user_profile_model.dart';
 import 'package:paramount_student/views/screens/Auth_screens/ForgotPassword/forgot_password-screen.dart';
 import 'package:paramount_student/views/screens/Chats/Get_all_chats.dart';
+import 'package:paramount_student/views/screens/Chats/Get_chat_messages.dart';
 import 'package:paramount_student/views/screens/Communites_Detial/communities_detail_screen.dart';
 import 'package:paramount_student/views/screens/home/Home_screen.dart';
 import '../../views/screens/Auth_screens/Login/login_screen.dart';
@@ -42,6 +43,7 @@ class Routes {
 
   // ----------------- Chats screens routes ----------------------------- //
   static const String getAllChats = 'GetAllChats';
+  static const String getChatMessages = 'GetChatMessages';
 
   // ----------------- ReportListingScreen screens routes ----------------------------- //
 
@@ -79,7 +81,10 @@ class Routes {
     // ----------------- Chats screens routes ----------------------------- //
       case getAllChats:
         return MaterialPageRoute(builder: (_) =>  const GetAllChatsScreen());
-
+      case getChatMessages:
+        final args = settings.arguments as Map<String, dynamic>;
+        final id = args['id'] as int;
+        return MaterialPageRoute(builder: (_) =>  GetChatMessagesScreen(id: id));
 
     // ----------------- Home Screens routes ----------------------------- //
       case homeScreen:

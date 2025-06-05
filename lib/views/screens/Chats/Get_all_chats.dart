@@ -3,10 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:paramount_student/bloc/Chats/chat_bloc.dart';
 import 'package:paramount_student/bloc/Chats/chat_event.dart';
 import 'package:paramount_student/core/helper_fuctions/date_formatter.dart';
-import 'package:paramount_student/core/helper_fuctions/helper_function.dart';
 import 'package:paramount_student/core/presentation/image_constant.dart';
-
 import '../../../core/presentation/app_colors.dart';
+import '../../../core/routes/routes.dart';
 import '../../common/custom_sizedBox.dart';
 import '../../common/shimmer_widget.dart';
 import '../../common/text_widgets.dart';
@@ -62,7 +61,7 @@ class GetAllChatsScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: ListTile(
                         onTap: () {
-                          // Navigate to chat screen or perform your action
+                          Navigator.pushNamed(context, Routes.getChatMessages, arguments: {'id': chat.receiverId},);
                         },
                         leading: CircleAvatar(
                           radius: 25,
