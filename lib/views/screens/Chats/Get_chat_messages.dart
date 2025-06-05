@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:paramount_student/bloc/Chats/chat_event.dart';
 import 'package:paramount_student/core/helper_fuctions/current_access_token.dart';
+import 'package:paramount_student/views/common/custom_button.dart';
+import 'package:paramount_student/views/common/custom_textfeild.dart';
 import '../../../bloc/Chats/chat_bloc.dart';
+import '../../../core/helper_fuctions/format_validator.dart';
 import '../../common/custom_sizedBox.dart';
 import '../../common/shimmer_widget.dart';
 import '../../common/text_widgets.dart';
@@ -17,6 +20,7 @@ class GetChatMessagesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final chatBloc =  context.read<ChatBloc>();
     Future<void> loadAllData(BuildContext context) async {
       context.read<ChatBloc>().add(GetChatsMessages(id: id));
       await Future.microtask((){
@@ -51,6 +55,16 @@ class GetChatMessagesScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Sized(height: 0.05),
+            Row(
+              children: [
+                Expanded(child: CustomTextField(controller: chatBloc.messageController, hintText: 'type message .....', validate: (value){
+                  FormValidators.validateNormalField(value, 'message must not be empty');
+                })),
+                TapIcon(iconData: Icons.send, onTap: (){
+                  chatBloc.add(SendChatsMessages(receiverId: id, context: context));
+                }),
+              ],
+            ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

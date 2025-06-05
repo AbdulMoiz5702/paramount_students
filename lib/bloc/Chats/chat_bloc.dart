@@ -10,6 +10,8 @@ import 'chat_state.dart';
 class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
   ChatBloc() : super(ChatState(isAllChats: false,allChats: [],errorMessage: '',isChatsMessages: false,chatMessages: [])) {
     on<GetAllChats>(getAllChats);
+    on<GetChatsMessages>(getChatMessagesChats);
+    on<SendChatsMessages>(sendChatsMessages);
   }
 
 
@@ -38,7 +40,11 @@ class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
 
   Future<void> sendChatsMessages(SendChatsMessages event, Emitter<ChatState> emit) async {
     SendMessageRequest sendMessageRequest = SendMessageRequest(message: messageController.text.trim());
-    await ChatsRepo.sendChatsMessages(receiverId: event.receiverId,context:event.context,sendMessage: sendMessageRequest);
+    await ChatsRepo.sendChatsMessages(receiverId: event.receiverId,context:event.context,sendMessage: sendMessageRequest).then((value){
+      if(value.statusCode == 200){
+        messageController.clear();
+      }
+    });
   }
 
 
