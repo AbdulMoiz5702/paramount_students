@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_)=> ChatBloc()),
       ],
       child: const MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Paramount Student',
         onGenerateRoute: Routes.onGenerateRoute,
         initialRoute:  Routes.splash,
       ),
