@@ -54,18 +54,8 @@ class GetChatMessagesScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Sized(height: 0.05),
-            Row(
-              children: [
-                Expanded(child: CustomTextField(controller: chatBloc.messageController, hintText: 'type message .....', validate: (value){
-                  FormValidators.validateNormalField(value, 'message must not be empty');
-                })),
-                TapIcon(iconData: Icons.send, onTap: (){
-                  chatBloc.add(SendChatsMessages(receiverId: id, context: context));
-                }),
-              ],
-            ),
-            ListView.builder(
+                const Sized(height: 0.02),
+                ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: messagesState.chatMessages.length,
@@ -104,6 +94,17 @@ class GetChatMessagesScreen extends StatelessWidget {
                 );
               },
             ),
+                const Sized(height: 0.02),
+                Row(
+                  children: [
+                    Expanded(child: CustomTextField(controller: chatBloc.messageController, hintText: 'type message .....', validate: (value){
+                      FormValidators.validateNormalField(value, 'message must not be empty');
+                    })),
+                    TapIcon(iconData: Icons.send, onTap: (){
+                      chatBloc.add(SendChatsMessages(receiverId: id, context: context));
+                    }),
+                  ],
+                ),
               ],
             ),
           );
