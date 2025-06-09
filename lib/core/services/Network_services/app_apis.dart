@@ -2,9 +2,6 @@
 
 class AppApis {
 
-  // images path
-  static const String domainUrl = 'http://$_ip:8001';
-
 
   // Auth Apis
   static const String  _ip = '192.168.1.11';
