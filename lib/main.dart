@@ -34,10 +34,7 @@ Future<void> main() async {
         );
       }
     }(),
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]),
+
   ]);
   HydratedBloc.storage = results[0] as HydratedStorage;
   runApp(const MyApp());
