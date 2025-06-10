@@ -79,12 +79,12 @@ class HelperFunctions {
     return years.toStringAsFixed(decimalPlaces);
   }
 
-  static String getFullProfilePictureUrl({required int userId,required String imageUrl}) {
-    if (imageUrl.startsWith('http')) {
-      return imageUrl;
-    }
-    const String baseUrl = '${AppApis.domainUrl}/storage/user_img';
-    return '$baseUrl/$userId/$imageUrl';
-  }
+  // static String getFullProfilePictureUrl({required int userId,required String imageUrl}) {
+  //   if (imageUrl.startsWith('http')) {
+  //     return imageUrl;
+  //   }
+  //   const String baseUrl = '${AppApis.domainUrl}/storage/user_img';
+  //   return '$baseUrl/$userId/$imageUrl';
+  // }
 
 }
