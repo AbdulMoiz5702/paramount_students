@@ -22,5 +22,12 @@ class HeadersFormats {
     };
   }
 
+  static Map<String, String> othersHeaders({required String token}) {
+    return {
+      'Accept':'application/json',
+      'Authorization':'Bearer $token'
+    };
+  }
+
 
 }
