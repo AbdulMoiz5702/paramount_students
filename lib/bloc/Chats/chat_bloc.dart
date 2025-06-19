@@ -50,7 +50,10 @@ class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
   }
 
 
-
+  void onNewChatMessageReceived(NewChatMessageReceived event, Emitter<ChatState> emit) {
+    final updatedMessages = List<ChatMessage>.from(state.chatMessages)..add(event.newMessage);
+    emit(state.copyWith(chatMessages: updatedMessages));
+  }
 
 
   @override
