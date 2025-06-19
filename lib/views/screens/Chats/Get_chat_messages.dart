@@ -23,7 +23,21 @@ class GetChatMessagesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chatBloc =  context.read<ChatBloc>();
-
+    Future<void> loadAllData(BuildContext context) async {
+      chatBloc.add(GetChatsMessages(id: id));
+      await chatBloc.stream.firstWhere((state) => !state.isChatsMessages);
+      await PusherRepo.initPusher(
+        context: context,
+        onMessageReceived: (data) {
+          try {
+            final newMessage = ChatMessage.fromJson(data);
+            chatBloc.add(NewChatMessageReceived(newMessage: newMessage));
+          } catch (e) {
+            debugPrint("Pusher message parse error: $e");
+          }
+        },
+      );
+    }
     return FutureBuilder(
       future: loadAllData(context),
       builder: (context, snapshot) {
