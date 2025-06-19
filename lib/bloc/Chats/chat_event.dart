@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../models/Chat_Models/Chat_messages_model.dart';
+
 abstract class ChatEvent extends Equatable{
   @override
   List<Object> get props =>[];
@@ -24,4 +26,10 @@ class SendChatsMessages extends ChatEvent{
   SendChatsMessages({required this.receiverId,required this.context});
   @override
   List<Object> get props =>[receiverId,context];
+}
+
+
+class NewChatMessageReceived extends ChatEvent {
+  final ChatMessage newMessage;
+  NewChatMessageReceived({required this.newMessage});
 }

@@ -22,7 +22,7 @@ class ChatsRepo {
         ),
         fromJson: (json) => ChatListResponse.fromJson(json),
       );
-    } catch (error, stackTrace) {
+    } catch (error) {
       final errorMessage = ExceptionHandler.getMessage(error);
       throw Exception(errorMessage);
     }

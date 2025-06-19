@@ -12,6 +12,8 @@ class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
     on<GetAllChats>(getAllChats);
     on<GetChatsMessages>(getChatMessagesChats);
     on<SendChatsMessages>(sendChatsMessages);
+    on<NewChatMessageReceived>(onNewChatMessageReceived);
+
   }
 
 
@@ -46,6 +48,7 @@ class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
       }
     });
   }
+
 
 
 
