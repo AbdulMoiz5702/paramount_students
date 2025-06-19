@@ -35,8 +35,10 @@ class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
       final ChatMessagesResponse responseModel = await ChatsRepo.getChatsMessages(id: event.id);
       final List<ChatMessage> messages = responseModel.responseBody.data;
       emit(state.copyWith(chatMessages: messages, isChatsMessages: false,));
+      debugPrint('isChatsMessages :${state.isChatsMessages}');
     } catch (error) {
       emit(state.copyWith(isChatsMessages: false, errorMessage: error.toString(),));
+      debugPrint('isChatsMessages :${state.isChatsMessages}');
     }
   }
 

@@ -38,60 +38,62 @@ class GetChatMessagesScreen extends StatelessWidget {
         },
       );
     }
-    return FutureBuilder(
-      future: loadAllData(context),
-      builder: (context, snapshot) {
-        final messagesState = context.watch<ChatBloc>().state;
-        if (snapshot.connectionState == ConnectionState.waiting || messagesState.isAllChats == true) {
-          return const ShimmerScreen(isHomeScreen: true,);
-        } else if (snapshot.hasError) {
-          return Center(
-            child: mediumText(
-                title: 'Ops ${messagesState.errorMessage}',
-                textAlign: TextAlign.center
-            ),
-          );
-        }else if(messagesState.allChats.isEmpty){
-          return Center(
-            child: mediumText(
-                title: 'Ops No listing found',
-                textAlign: TextAlign.center
-            ),
-          );
-        } else {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Sized(height: 0.02),
-                ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: messagesState.chatMessages.length,
-              itemBuilder: (context, index) {
-                final messages = messagesState.chatMessages[index];
-                final currentUserId = CurrentUserSecrets.currentUserId;
-                return ChatBubbleWidget(messages: messages, currentUserId: currentUserId);
-              },
-            ),
-                const Sized(height: 0.02),
-                Row(
-                  children: [
-                    Expanded(child: CustomTextField(controller: chatBloc.messageController, hintText: 'type message .....', validate: (value){
-                      return FormValidators.validateNormalField(value, 'message must not be empty');
-                    })),
-                    TapIcon(iconData: Icons.send, onTap: (){
-                      chatBloc.add(SendChatsMessages(receiverId: id, context: context));
-                    }),
-                  ],
-                ),
-              ],
-            ),
-          );
-        }
-      },
+    return Scaffold(
+      body: FutureBuilder(
+        future: loadAllData(context),
+        builder: (context, snapshot) {
+          final messagesState = context.watch<ChatBloc>().state;
+          if (snapshot.connectionState == ConnectionState.waiting || messagesState.isChatsMessages == true) {
+            return const ShimmerScreen(isHomeScreen: true,);
+          } else if (snapshot.hasError) {
+            return Center(
+              child: mediumText(
+                  title: 'Ops ${messagesState.errorMessage}',
+                  textAlign: TextAlign.center
+              ),
+            );
+          }else if(messagesState.chatMessages.isEmpty){
+            return Center(
+              child: mediumText(
+                  title: 'Ops No listing found',
+                  textAlign: TextAlign.center
+              ),
+            );
+          } else {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Sized(height: 0.02),
+                  ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: messagesState.chatMessages.length,
+                itemBuilder: (context, index) {
+                  final messages = messagesState.chatMessages[index];
+                  final currentUserId = CurrentUserSecrets.currentUserId;
+                  return ChatBubbleWidget(messages: messages, currentUserId: currentUserId);
+                },
+              ),
+                  const Sized(height: 0.02),
+                  Row(
+                    children: [
+                      Expanded(child: CustomTextField(controller: chatBloc.messageController, hintText: 'type message .....', validate: (value){
+                        return FormValidators.validateNormalField(value, 'message must not be empty');
+                      })),
+                      TapIcon(iconData: Icons.send, onTap: (){
+                        chatBloc.add(SendChatsMessages(receiverId: id, context: context));
+                      }),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }

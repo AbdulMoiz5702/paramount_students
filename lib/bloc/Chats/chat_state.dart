@@ -17,7 +17,7 @@ class  ChatState extends Equatable{
 
 
   @override
-  List<Object?> get props => [isAllChats,allChats,errorMessage];
+  List<Object?> get props => [isAllChats,allChats,errorMessage,isChatsMessages,chatMessages];
 
   Map<String, dynamic> toJson() => {
     'isAllChats': isAllChats,
