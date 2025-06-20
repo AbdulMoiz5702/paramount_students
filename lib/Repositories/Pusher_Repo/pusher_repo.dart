@@ -4,9 +4,11 @@ import 'package:paramount_student/core/exceptions/net_work_excptions.dart';
 import 'package:paramount_student/core/services/Network_services/pusher_credentials.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
+import '../../models/Chat_Models/pusher_tigger_model.dart';
+
 class PusherRepo {
 
-   static  PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
+  static  PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
 
  static Future<void> initPusher({required Function(dynamic message) onMessageReceived,required BuildContext context}) async {
     try {
@@ -67,9 +69,13 @@ class PusherRepo {
     }
   }
 
-  static Future<void> triggerEvent ({required String message}) async {
-   final event = pusher.trigger;
-   await event(PusherEvent(channelName: PusherCredentials.channelName, eventName:PusherCredentials.eventName,data: ));
+  static Future<void> triggerEvent ({required PusherTriggerMessageModel data}) async {
+   try{
+     final event = pusher.trigger;
+     await event(PusherEvent(channelName: PusherCredentials.channelName, eventName:PusherCredentials.eventName,data: data.toJson()));
+   }catch(error){
+     debugPrint("Pusher Trigger Event error: $error");
+   }
   }
 
 
