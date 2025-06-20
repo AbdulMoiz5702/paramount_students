@@ -106,7 +106,6 @@ class ChatMessage {
   });
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) {
-    debugPrint('🔍 ChatMessage.fromJson received: $json');
     return ChatMessage(
       id: json['id'],
       senderId: json['sender_id'],

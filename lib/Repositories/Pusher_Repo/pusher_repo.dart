@@ -67,5 +67,10 @@ class PusherRepo {
     }
   }
 
+  static Future<void> triggerEvent ({required String message}) async {
+   final event = pusher.trigger;
+   await event(PusherEvent(channelName: PusherCredentials.channelName, eventName:PusherCredentials.eventName,data: ));
+  }
+
 
 }
