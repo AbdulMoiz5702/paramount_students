@@ -10,7 +10,7 @@ class PusherRepo {
 
   static  PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
 
- static Future<void> initPusher({required Function(dynamic message) onMessageReceived,required BuildContext context}) async {
+  static Future<void> initPusher({required Function(dynamic message) onMessageReceived,required BuildContext context}) async {
     try {
       await pusher.init(
         apiKey:  PusherCredentials.key,
@@ -77,6 +77,5 @@ class PusherRepo {
      debugPrint("Pusher Trigger Event error: $error");
    }
   }
-
 
 }

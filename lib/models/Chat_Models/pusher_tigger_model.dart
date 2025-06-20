@@ -1,8 +1,8 @@
 
 class PusherTriggerMessageModel {
   final String message;
-  final String senderId;
-  final String receiverId;
+  final int senderId;
+  final int receiverId;
   final String timestamp;
 
   PusherTriggerMessageModel({
