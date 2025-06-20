@@ -42,15 +42,23 @@ class PusherRepo {
 
       await pusher.subscribe(
         channelName: PusherCredentials.channelName,
-        onEvent: (event) {
-          debugPrint("Pusher Event received: ${event.eventName}, Data: ${event.data}");
-          try {
-            final decoded = jsonDecode(event.data ?? '{}');
-            onMessageReceived(decoded);
-          } catch (e) {
-            debugPrint('Error decoding Pusher message: $e');
+          onEvent: (event) {
+            debugPrint("Pusher Event received: ${event.eventName}, Data: ${event.data}");
+            try {
+              if (event.data is String) {
+                debugPrint("🔍 Raw String Data: ${event.data}");
+                final decoded = jsonDecode(event.data!);
+                debugPrint("✅ Decoded JSON: $decoded");
+                onMessageReceived(decoded as Map<String, dynamic>);
+              } else if (event.data is Map) {
+                debugPrint("✅ Event data is already a Map");
+                final safeMap = (event.data as Map).cast<String, dynamic>();
+                onMessageReceived(safeMap);
+              }
+            } catch (e) {
+              debugPrint('❌ Error decoding Pusher message: $e');
+            }
           }
-        },
       );
       await pusher.connect();
     } catch (error,s) {

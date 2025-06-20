@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:paramount_student/bloc/Chats/chat_event.dart';
 import 'package:paramount_student/core/helper_fuctions/current_access_token.dart';
+import 'package:paramount_student/core/presentation/app_colors.dart';
 import 'package:paramount_student/views/common/custom_button.dart';
 import 'package:paramount_student/views/common/custom_textfeild.dart';
 import '../../../Repositories/Pusher_Repo/pusher_repo.dart';
@@ -32,8 +33,8 @@ class GetChatMessagesScreen extends StatelessWidget {
           try {
             final newMessage = ChatMessage.fromJson(data);
             chatBloc.add(NewChatMessageReceived(newMessage: newMessage));
-          } catch (e) {
-            debugPrint("Pusher message parse error: $e");
+          } catch (e ,s ) {
+            debugPrint("Pusher message parse error: $e $s");
           }
         },
       );
@@ -83,7 +84,7 @@ class GetChatMessagesScreen extends StatelessWidget {
                       Expanded(child: CustomTextField(controller: chatBloc.messageController, hintText: 'type message .....', validate: (value){
                         return FormValidators.validateNormalField(value, 'message must not be empty');
                       })),
-                      TapIcon(iconData: Icons.send, onTap: (){
+                      TapIcon(iconData: Icons.send,color: AppColor.primaryColor,size:25, onTap: (){
                         chatBloc.add(SendChatsMessages(receiverId: id, context: context));
                       }),
                     ],

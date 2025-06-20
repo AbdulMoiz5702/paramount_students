@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class ChatMessagesResponse {
   final bool error;
   final int statusCode;
@@ -104,6 +106,7 @@ class ChatMessage {
   });
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) {
+    debugPrint('🔍 ChatMessage.fromJson received: $json');
     return ChatMessage(
       id: json['id'],
       senderId: json['sender_id'],
