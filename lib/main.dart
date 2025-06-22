@@ -20,7 +20,6 @@ import 'core/routes/routes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   final results = await Future.wait([
         () async {
         if (kIsWeb) {

@@ -40,7 +40,7 @@ class PusherRepo {
       );
 
       await pusher.subscribe(
-        channelName: PusherCredentials.channelName,
+        channelName: PusherCredentials.channel,
           onEvent: (event) {
             debugPrint("Pusher Event received: ${event.eventName}, Data: ${event.data}");
             try {
