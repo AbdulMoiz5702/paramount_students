@@ -9,8 +9,6 @@ class PusherCredentials {
    static const String secret = 'ff76f5edd57f0ca80293';
    static const String cluster = 'ap2';
 
-   // ---------------- events-name ---------------- //
-   static const String eventName = 'new_message';
 
 
 }
