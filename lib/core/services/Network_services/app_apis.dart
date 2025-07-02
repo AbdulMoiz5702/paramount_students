@@ -42,9 +42,6 @@ class AppApis {
   static const String sendChats = '$_baseUrl/v1/messages/send/';
   static const String deleteChats = '$_baseUrl/v1/messages/delete/';
 
-  // vouchers Apis
-  static const String getAllVouchers = '$_baseUrl/v1/messages/user-messages/all';
-  static const String getSingleVouchers = '$_baseUrl/v1/messages/';
 
 
 
