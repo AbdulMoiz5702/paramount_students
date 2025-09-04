@@ -31,5 +31,5 @@ class AppApis {
   static const String getAllChats = '$_baseUrl/v1/messages/user-messages/all';
   static const String getSingleChats = '$_baseUrl/v1/messages/';
   static const String sendChats = '$_baseUrl/v1/messages/send/';
-  static const String deleteChats = '$_baseUrl/v1/messages/delete/';
+  static const String deleteChats = '$_baseUrl/v1/messages/delete/ss';
 }
