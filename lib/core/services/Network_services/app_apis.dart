@@ -20,7 +20,7 @@ class AppApis {
   static const String postOrganizations = '$_baseUrl/v1/organizations';
   static const String deleteOrganizations = '$_baseUrl/v1/organizations/';
   // Communities Apis
-  static const String getAllCommunities = '$_baseUrl/v1/communities/all';
+  static const String getAllCommunities = '$_baseUrl/v1/communities/alllll';
   static const String getSingleCommunities = '$_baseUrl/v1/communities/';
   static const String followCommunities = '$_baseUrl/v1/communities/';
   static const String unfollowCommunities = '$_baseUrl/v1/communities/';
