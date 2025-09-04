@@ -10,7 +10,7 @@ class AppApis {
   static const String resendOtp = '$_baseUrl/auth/resend_otp?username=';
   static const String forgotPassword = '$_baseUrl/auth/forgot_password?username=';
   // Users Apis
-  static const String getUsers = '$_baseUrl/v1/users';
+  static const String getUsers = '$_baseUrl/v1/userssss';
   static const String getSingleUser = '$_baseUrl/v1/users/';
   static const String updateCurrentUser = '$_baseUrl/v1/users/update/';
   static const String updateUserPic = '$_baseUrl/v1/users/upload-image/';
